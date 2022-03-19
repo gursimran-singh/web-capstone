@@ -51,7 +51,7 @@ const getOneItem = (req, res) => {
     docClient.get(params, (err, itemData) => {
       if (Object.keys(itemData).length === 0) {
         res
-          .json({ message: "Table does not have data with that ID" })
+          .json({ message: "id does not found " })
           .status(404);
         return;
       } else if (err) {
