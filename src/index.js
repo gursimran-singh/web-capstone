@@ -1,15 +1,17 @@
+import React from 'react';
 import ReactDOM from 'react-dom';
-import './css/index.css'
-import './css/css/fontawesome.css'
-import './css/css/brands.css'
-import './css/css/solid.css'
-import Contactus from './pages/Contactus'
-import Login from './pages/Login'
-import Signup from './pages/Signup'
-import Cart from './pages/Cart'
-import Checkout from './pages/Checkout'
-// ReactDOM.render(<Contactus />, document.querySelector("#root"));
-// ReactDOM.render(<Login />, document.querySelector("#root"));
-// ReactDOM.render(<Signup />, document.querySelector("#root"));
-ReactDOM.render(<Cart />, document.querySelector("#root"));
-// ReactDOM.render(<Checkout />, document.querySelector("#root"))
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
