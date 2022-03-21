@@ -1,0 +1,246 @@
+.contactus a{
+  text-decoration: none;
+}
+.contactus ul{
+  list-style: none;
+}
+.contactus h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+.contactus h2 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+.contactus h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.contactus .content{
+  margin-top: 4.375rem;
+}
+.contactus .content-area {
+  max-width: 1366px;
+  margin: 0 auto;
+  padding: 0 0.625rem;
+}
+
+.contactus .lft-rgt-arrg {
+  display: flex;
+  justify-content: space-between;
+}
+.contactus .left-part{
+  margin-right: 2%;
+}
+.contactus .left-part,
+.contactus .right-part {
+  width: 100%;
+  flex: 1;
+  max-width: 650px;
+}
+
+@media screen and (max-width:992px) {
+  .contactus .lft-rgt-arrg {
+   flex-direction: column;
+
+  }
+  .contactus .right-part{
+    margin-top: 3.125rem;
+  }
+  
+}
+.contactus .contact-info ul{
+  padding: 1.25rem;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 5px rgba(29, 29, 29, 0.3);
+}
+.contactus .content-area .left-part {
+  display: flex;
+  justify-content: center;
+}
+
+.contactus .contactus-top {
+  background: url("../assets/contactus-bg.png") center/cover no-repeat;
+  height: 100vh;
+}
+
+@media screen and (max-width:992px) {
+  .contactus .contactus-top {
+    height: 40vw;
+    max-height: 397px;
+  }
+  
+}
+
+.contactus .contactus-top .content-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.contactus .contactus-top h1 {
+  color: #fff;
+}
+
+@media screen and (max-width: 992px) {
+
+  .contactus .lft-rgt-arrg {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .contactus .lft-rgt-arrg .right-part{
+    margin-top: 1.2rem;
+  }
+}
+.contactus .contact-info h4 {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+.contactus .contact-info h4>i {
+  margin-right: 8px;
+  color:#913838;
+}
+.contactus .contact-info ul{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 400px;
+}
+.contactus .contact-info h4{
+  margin-bottom: 10px;
+}
+.contactus .contact-info ul li:not(:last-child) {
+  margin-bottom: 10px;
+}
+.contactus .contact-info ul li span{
+  margin-left: calc( 1rem + 8px );
+}
+
+.contactus .social-media i{
+  font-size: 1.5rem;
+  color: rgba(29, 65, 196, 0.3);
+  margin-right: 8px; 
+}
+.contactus .social-media i:hover{
+  color: #913838;
+   
+}
+.contactus .contact-form input,
+.contactus .contact-form textarea{
+font-size: 1.125rem;
+margin-bottom: 10px;
+background-color: #eee;
+padding: 0.3125rem 0.5rem;
+/* outline: none; */
+border: 0;
+margin-top: 0.3125rem;
+}
+.contactus .contact-form h3{
+  margin-bottom: 20px;
+}
+.contactus #username, #email{
+  width: 49%;
+}
+.contactus #username{
+  margin-right: 2%;
+}
+.contactus #subject{
+  width: 100%;
+}
+.contactus #message-input{
+  width: 100%;
+}
+
+.contactus #submit-msg{
+  background-color: #913838;
+  width: 9.375rem;
+  color: #eee;
+  border: 1px solid #913838;
+}
+.contactus #submit-msg:hover{
+  background-color: transparent;
+  color: #913838;
+}
+.contactus .map{
+  width: 100%;
+  height: 40vw;
+}
+.contactus .map iframe{
+  height: 100%;
+}
+
+@media screen and (max-width: 992px) {
+  .contactus .map{
+    height: 60vw;
+  }
+}
+.al-login{
+  width: 90vw;
+  max-width: 450px;
+  box-shadow: 0 0 5px 10px rgba(29, 29, 29, 0.3);
+  padding: 1.25rem;
+  margin:  4.375rem auto;
+}
+.al-login h3{
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+.al-login .login-form input{
+  margin-bottom: 1.25rem;
+  font-size: 1.125rem;
+  padding: 0.3125rem;
+  width: 100%;
+  margin-top: 0.3125rem;
+}
+.al-login #keep-login{
+  width: auto;
+  margin-right: 5px;
+}
+
+.al-login #submit-btn{
+  background-color: #913838;
+  border: 1px solid #913838;
+  color: #eee;
+}
+.al-login #submit-btn:hover{
+  background-color: transparent;
+  color: #913838;
+}
+
+.signup{
+  width: 90vw;
+  max-width: 450px;
+  box-shadow: 0 0 5px 10px rgba(29, 29, 29, 0.3);
+  padding: 1.25rem;
+  margin:  4.375rem auto;
+}
+.signup h3{
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+.signup .signup-form input{
+  margin-bottom: 1.25rem;
+  margin-top: 0.3125rem;
+  font-size: 1.125rem;
+  padding: 0.3125rem;
+  width: 100%;
+}
+.signup #terms{
+  width: auto;
+}
+
+.signup #signup-btn{
+  background-color: #913838;
+  border: 1px solid #913838;
+  color: #eee;
+}
+.signup #signup-btn:hover{
+  background-color: transparent;
+  color: #913838;
+}
+.signup strong{
+  font-weight: bold;
+}
