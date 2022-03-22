@@ -4,7 +4,7 @@ const dynamoose = require("dynamoose");
 // console.log(categorySchema.schemas);
 var AWS = require("aws-sdk");
 const DynamoDB = new AWS.DynamoDB();
-const Ulid = require("ulid");
+// const Ulid = require("ulid");
 
 var itemSchema = new dynamoose.Schema({
   id: {
