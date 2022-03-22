@@ -4,17 +4,19 @@ import '../css/css/fontawesome.css'
 import '../css/css/brands.css'
 import '../css/css/solid.css'
 
+
 export default function Contactus() {
   return (
-
+    <>
+ 
     <div className="contactus">
       <div className="contactus-top">
-        <div className="content-area">
+        <div className="alcontent-area">
           <h1>Contact</h1>
         </div>
       </div>
-      <div className="content">
-        <div className="content-area lft-rgt-arrg">
+      <div className="alcontent">
+        <div className="alcontent-area lft-rgt-arrg">
           <div className="left-part contact-info">
             <ul>
               <li>
@@ -85,13 +87,15 @@ export default function Contactus() {
           </div>
         </div>
       </div>
-      <div className="content">
-        <div className="content-area">
+      <div className="alcontent">
+        <div className="alcontent-area">
           <div className="map">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2899.7878028103855!2d-80.4313807846429!3d43.3814607791316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882c75664e09bd3f%3A0x77eef9c3b120957c!2s288%20Doon%20S%20Dr%2C%20Kitchener%2C%20ON%20N2P%202X2!5e0!3m2!1sen!2sca!4v1647491238579!5m2!1sen!2sca" width="100%"  style={{border:0}} allowFullScreen="" loading="lazy" title="location"></iframe>
           </div>
         </div>
       </div>
     </div>
+  
+    </>
   );
 }
