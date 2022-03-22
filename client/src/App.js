@@ -11,8 +11,8 @@ function App() {
   return (
     <>
     <Header></Header>
-    <Homepage></Homepage>
-    {/* <Contactus></Contactus> */}
+    {/* <Homepage></Homepage> */}
+    <Contactus></Contactus>
     {/* <Login></Login> */}
     {/* <Signup></Signup> */}
     <Footer></Footer>
