@@ -16,7 +16,7 @@ function Banner(){
               <div className="banner-text">
                     <h1>Cuisine De Palace</h1>
                     <p>Get home cooked meal at your door step. Just one click away!!</p>     
-                    <a href="#" className="btn btn-red">Contact Now</a>
+                    <Link to="/contactus" className="btn btn-red">Contact Now</Link>
                 </div>
             </div>
 
