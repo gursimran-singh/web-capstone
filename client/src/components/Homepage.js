@@ -2,7 +2,9 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/js/dist/carousel';
 import './main.css';
-
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link, Outlet } from 'react-router-dom'
 
 function Banner(){
     return (
@@ -36,7 +38,21 @@ function Banner(){
     )
   }
 
-  function LatestProduct() {
+  function LatestProduct() {      
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async() => {
+      const result = await axios(
+        'https://6fdhemeqha.execute-api.ca-central-1.amazonaws.com/dev/api/food/',
+      );
+    const latestList = result.data.splice(-4);
+    setList(latestList)
+    // setList(result.data)
+    };
+    fetchData();
+  }, []);
+
     return (
         <div className="container-fluid mb-5">
                 <div className="container mb-1">
@@ -44,6 +60,22 @@ function Banner(){
                         <h2 className="underline">Latest Product</h2>   
                     </div>
                     <div className="row">
+                        {
+                            list.map( (item)=>{
+                                return (
+                                    <div className="col-md-3" key = {item.id}>
+                                    <div className="card">
+                                        <img src={'images/' + item.image} className="card-img-top" alt="..."/>
+                                        <div className="card-body text-center">
+                                            <h5 className="card-title">{item.name} </h5>
+                                            <p className=" main">{"$" + item.price }</p>    
+                                        </div>
+                                    </div>
+                                </div>
+                                )
+                            })
+                        }
+{/*                         
                         <div className="col-md-3">
                             <div className="card">
                                 <img src="images/sizzler.png" className="card-img-top" alt="..."/>
@@ -79,16 +111,22 @@ function Banner(){
                                     <p className=" main">$15 </p>    
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="text-center ">
-                        <a href="" className="main lead">Browse All 
+                        <Link to='/menu' className="main lead">Browse All 
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
                               <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                             </svg>
-                        </a>    
+                        </Link>    
+                        {/* <a href="" className="main lead">Browse All 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
+                              <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                            </svg>
+                        </a>  */}
                     </div>
                 </div>
+                {/* <Outlet /> */}
             </div>
     )
   }

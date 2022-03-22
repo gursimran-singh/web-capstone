@@ -5,13 +5,14 @@ import Footer from './components/Footer';
 import Contactus from './components/Contactus';
 import Login from './components/Login';
 import Signup from './components/Signup'
+import './index.css'
 
 
 function App() {
   return (
     <>
     <Header></Header>
-    <Homepage></Homepage>
+    {/* <Homepage></Homepage> */}
     {/* <Contactus></Contactus> */}
     {/* <Login></Login> */}
     {/* <Signup></Signup> */}

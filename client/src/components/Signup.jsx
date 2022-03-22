@@ -3,8 +3,11 @@ import '../css/contactus.css'
 import '../css/css/fontawesome.css'
 import '../css/css/brands.css'
 import '../css/css/solid.css'
+
 export default function Signup() {
   return (
+      <div className='signup-wrap'>
+    
       <div className="signup">
           <h3>Sign Up</h3>
           <form action="" className='signup-form'>
@@ -28,6 +31,7 @@ export default function Signup() {
             
           </form>
       </div>
-    
+     
+      </div>
   )
 }
