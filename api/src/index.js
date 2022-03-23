@@ -11,13 +11,15 @@ AWS.config.credentials = credentials;
 
 // require('./models/item');
 var apiRouter = require("./routes/indexRouteAPI");
+var categoriesRouter = require("./routes/categoryRouteAPI");
 
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/api", apiRouter);
+app.use("/api/food", apiRouter);
+app.use("/api/category", categoriesRouter);
 
 module.exports = app;
