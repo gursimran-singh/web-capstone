@@ -93,7 +93,7 @@
   font-size: 1.25rem;
   font-weight: bold;
 }
-.contactus .contact-info h4>i {
+.contactus .contact-info .info-icon {
   margin-right: 8px;
   color:#913838;
 }
@@ -114,12 +114,12 @@
   margin-left: calc( 1rem + 8px );
 }
 
-.contactus .social-media i{
+.contactus .social-media .social-icon{
   font-size: 1.5rem;
   color: rgba(29, 65, 196, 0.3);
   margin-right: 8px; 
 }
-.contactus .social-media i:hover{
+.contactus .social-media .social-icon:hover{
   color: #913838;
    
 }
@@ -259,7 +259,7 @@ margin-top: 0.3125rem;
 }
 
 .cart{
-  max-width: 400px;
+  max-width: 450px;
   padding: 0.625rem;
   margin: 0 auto;
 
@@ -270,15 +270,16 @@ margin-top: 0.3125rem;
  font-weight: bold;
  font-size: 1.5rem;
  text-align: center;
- margin-bottom: 1rem;
+ margin-bottom: 2rem;
 }
-
+.cart ul{
+  padding: 0;
+ }
 .cart ul li{
   display: flex;
-}
-.cart ul li{
   margin-bottom: 0.625rem;
 }
+
 .cart ul li .left-part{
   flex: 1 32%;
   margin-right: 4%;

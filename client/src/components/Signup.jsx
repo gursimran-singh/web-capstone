@@ -1,8 +1,5 @@
 import React from 'react'
 import '../css/contactus.css'
-import '../css/css/fontawesome.css'
-import '../css/css/brands.css'
-import '../css/css/solid.css'
 
 export default function Signup() {
   return (
