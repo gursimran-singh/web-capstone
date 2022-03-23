@@ -1,6 +1,7 @@
 var AWS = require("aws-sdk");
 const { NULL } = require("dynamoose");
 var docClient = new AWS.DynamoDB.DocumentClient();
+const Ulid = require("ulid");
 
 const getAllItems = (req, res) => {
   try {
@@ -45,7 +46,6 @@ const getAllItems = (req, res) => {
 };
 
 const getOneItem = (req, res) => {
-  console.log(itemObject);
   var foodId = req.params.foodid;
   try {
     const params = {
@@ -109,7 +109,7 @@ const postOneItem =  (req, res) => {
               const params = {
                 TableName: "item",
                 Item: {
-                  id: { S: req.body.id },
+                  id: { S: Ulid.ulid()},
                   category_id: { S: citem.id },
                   image: { S: req.body.image },
                   rating: { N: req.body.rating },
@@ -122,7 +122,7 @@ const postOneItem =  (req, res) => {
               new AWS.DynamoDB().putItem(params, (err, data) => {
                 if (err) {
                   console.log(err);
-                  return res.json("Item can not be added").status(400);
+                  return res.json(err).status(400);
                 } else {
                   console.log("Item has been added");
                   return res.json(data).status(200);
@@ -240,7 +240,7 @@ const deleteOneItem = (req, res) => {
   docClient.update(params1, (err, data) => {
     if (err) {
       console.log(err);
-      return res.json("Item can not be deleted").status(400);
+      return res.json("Item can not be deleted",err).status(400);
     } else {
       console.log("Item has been deleted");
       return res.json(data).status(200);

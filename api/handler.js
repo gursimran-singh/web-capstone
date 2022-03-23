@@ -1,8 +1,10 @@
 const app = require("./src/index");
 require("dotenv").config();
 
+console.log(process.env.MODE);
 if (process.env.MODE == "local") {
   //**********************aws*************************************
+  
   var AWS = require("aws-sdk");
   AWS.config.update({
     region: "ca-central-1", // replace with your region in AWS account
