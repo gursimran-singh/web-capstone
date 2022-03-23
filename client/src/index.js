@@ -8,6 +8,7 @@ import Login from "./components/Login"
 import Signup from "./components/Signup"
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Contactus from './components/Contactus';
+import Menu from './components/Menu';
 
 ReactDOM.render(
   // <React.StrictMode>
@@ -19,15 +20,13 @@ ReactDOM.render(
      
         <Route index element={<Homepage />}></Route>
         <Route path="homepage" element={<Homepage />}></Route>
-        {/* <Route path="menu" element={<Menu/>}>
-      
-        </Route> */}
+        <Route path="menu" element={<Menu/>}></Route>
         <Route path="contactus" element={<Contactus />}></Route>
         <Route path="login" element={<Login />}></Route>
         <Route path="signup" element={<Signup />}></Route>
         <Route path='*' element={
           <main style={{ padding: "1rem", fontSize:"1.25rem" }}>
-            <p>There is nothing here</p>
+            <p className="main">Page Not FOund.</p>
           </main>
         } />
       </Route>

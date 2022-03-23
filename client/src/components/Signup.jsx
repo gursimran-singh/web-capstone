@@ -15,7 +15,7 @@ export default function Signup() {
             <input type="text" name="fullname" id="fullname" placeholder='Full Name' />
             <br />
             <label htmlFor="signup-">Email</label><br />
-            <input type="email" name="signup-email" id="signup-email" placeholder='e-mail address' />
+            <input type="email" name="signup-email" id="signup-email" placeholder='Email address' />
             <br />
             <label htmlFor="password">Password</label>
             <br />

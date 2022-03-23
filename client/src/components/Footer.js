@@ -11,7 +11,7 @@ function Footer(){
                     <div className="col-md-4 col-lg-6 order-md-last">
                         <div className="row justify-content-end">
                             <div className="col-md-12 col-lg-9 text-md-right mb-md-0 mb-4">
-                                <a href="#" className="logo"><img src="images/logo-ver3.png" className="logo" alt=""logo/></a>
+                                <a href="#" className="logo"><img src="images/logo-ver3.png" className="logo" alt="logo"/></a>
                                 <p className="copyright">
                               Copyright ©2022 All rights reserved | <i className="ion-ios-heart" aria-hidden="true"></i> by <a href="#" target="_blank">Cuisine De Palace</a>
                              </p>

@@ -12,7 +12,7 @@ export default function Login() {
           <h3>Log In</h3>
           <form action="" className='login-form'>
             <label htmlFor="login-email">Email</label><br />
-            <input type="email" name="login-email" id="login-email" placeholder='e-mail address' />
+            <input type="email" name="login-email" id="login-email" placeholder='Email address' />
             <br />
             <label htmlFor="password">Password</label>
             <br />
