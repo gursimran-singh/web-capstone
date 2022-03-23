@@ -1,11 +1,36 @@
 import React from "react";
 import '../css/contactus.css'
-import '../css/css/fontawesome.css'
-import '../css/css/brands.css'
-import '../css/css/solid.css'
-
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTwitterSquare } from "@fortawesome/free-brands-svg-icons";
+import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
+import { faInstagramSquare } from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
+import { faMapMarkedAlt } from "@fortawesome/free-solid-svg-icons";
+import { faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faClock } from "@fortawesome/free-regular-svg-icons";
+import { useState } from "react";
+import { useDebouncedCallback } from 'use-debounce';
+ 
 export default function Contactus() {
+
+  const [username, setUsername]=useState();
+  const [email, setEmail]=useState();
+  const [messageInput, setMessageInput]=useState();
+  const [subject, setSubject]=useState();
+
+  const debounced = useDebouncedCallback(
+    (value)=>{
+      setUsername(value)
+      console.log(username);
+    }
+    , 500);
+
+  const submitHandler = ()=>{
+      console("hello")
+  }
+
+ 
+
   return (
     <>
  
@@ -21,45 +46,47 @@ export default function Contactus() {
             <ul>
               <li>
                 <h4>
-                  <i className="fas fa-map-marker-alt"></i>Location
+                <FontAwesomeIcon icon={faMapMarkedAlt} className = "info-icon"/>Location
                 </h4>
                 <span>288 Doon S Dr, Kitchener, ON N2P 2X2</span>
               </li>
               <li>
                 <h4>
-                  <i className="fas fa-envelope"></i>Email us
+                <FontAwesomeIcon icon={faEnvelope} className = "info-icon"/>Email us
                 </h4>
                 <span>service@fooddeliverysystem.com</span>
               </li>
               <li>
                 <h4>
-                  <i className="fas fa-phone-alt"></i>Phone
+                <FontAwesomeIcon icon={faPhone} className = "info-icon"/>Phone
                 </h4>
                 <span>(+1) 123-456-7890</span>
               </li>
               <li>
                 <h4>
-                  <i className="fas fa-clock"></i>Open Hours
+                <FontAwesomeIcon icon={faClock} className = "info-icon"/>Open Hours
                 </h4>
                 <span>Mon - Fri: 8am to 11pm </span><br />
                 <span>Sat - Sun: 11am to 11pm</span>
               </li>
               <li className="social-media">
                 <h4>Follow us</h4>
-                <i className="fab fa-facebook-square"></i>
-                <i className="fab fa-twitter-square"></i>
-                <i className="fab fa-instagram-square"></i>
+                <FontAwesomeIcon icon={faFacebookSquare} className = "social-icon"/>
+                <FontAwesomeIcon icon={faTwitterSquare} className = "social-icon"/>
+                <FontAwesomeIcon icon={faInstagramSquare} className = "social-icon"/>     
               </li>
             </ul>
           </div>
           <div className="right-part contact-form">
             <h3>How can we help you?</h3>
-            <form action="">
+            <form id="contactForm" method="POST" onSubmit={submitHandler}>
               <input
                 id="username"
                 type="text"
                 placeholder="Your name"
                 name="username"
+                value={username}
+                onChange ={ (e) =>debounced(e.target.value)}
               />
               <input
                 type="email"
