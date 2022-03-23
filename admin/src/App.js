@@ -20,14 +20,14 @@ function App() {
           <Route exact path="/" element={<Home />} />
 
           <Route path="/users" element={<UserList />} />
-          <Route path="/users:userId" element={<NewUser />} />
+          <Route path="/users/:userId" element={<NewUser />} />
 
           <Route path="/products" element={<ProductList />} />
-          <Route path="/products:productId" element={<NewProduct />} />
+          <Route path="/products/:productId" element={<NewProduct />} />
           <Route path="/products/newProduct" element={<NewProduct />} />
 
           <Route path="/categories" element={<Category />} />
-          <Route path="/categories:categoryId" element={<NewCategory />} />
+          <Route path="/categories/:categoryId" element={<NewCategory />} />
           <Route path="/categories/newCategory" element={<NewCategory />} />
         </Routes>
       </div>
