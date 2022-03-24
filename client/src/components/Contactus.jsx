@@ -35,11 +35,15 @@ export default function Contactus() {
     <>
  
     <div className="contactus">
-      <div className="contactus-top">
-        <div className="alcontent-area">
-          <h1>Contact</h1>
-        </div>
-      </div>
+    <div id="contact-banner">
+            <div className="banner-text">
+              <h1>contact us</h1>
+              <p>For any questions Email or Call us at:</p>
+              <p><FontAwesomeIcon icon={faEnvelope} /> : contact@cuisine.com</p>
+              <p><FontAwesomeIcon icon={faPhone} /> : 983-383-3983</p>
+            </div> 
+    </div>     
+      
       <div className="alcontent">
         <div className="alcontent-area lft-rgt-arrg">
           <div className="left-part contact-info">
@@ -54,13 +58,13 @@ export default function Contactus() {
                 <h4>
                 <FontAwesomeIcon icon={faEnvelope} className = "info-icon"/>Email us
                 </h4>
-                <span>service@fooddeliverysystem.com</span>
+                <span>contact@cuisine.com</span>
               </li>
               <li>
                 <h4>
                 <FontAwesomeIcon icon={faPhone} className = "info-icon"/>Phone
                 </h4>
-                <span>(+1) 123-456-7890</span>
+                <span>(+1) 983-383-3983</span>
               </li>
               <li>
                 <h4>
@@ -114,7 +118,7 @@ export default function Contactus() {
           </div>
         </div>
       </div>
-      <div className="alcontent">
+      <div className="alcontent bg-light" >
         <div className="alcontent-area">
           <div className="map">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2899.7878028103855!2d-80.4313807846429!3d43.3814607791316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882c75664e09bd3f%3A0x77eef9c3b120957c!2s288%20Doon%20S%20Dr%2C%20Kitchener%2C%20ON%20N2P%202X2!5e0!3m2!1sen!2sca!4v1647491238579!5m2!1sen!2sca" width="100%"  style={{border:0}} allowFullScreen="" loading="lazy" title="location"></iframe>
