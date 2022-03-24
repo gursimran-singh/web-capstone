@@ -16,17 +16,21 @@ var categorySchema = new dynamoose.Schema({
     type: String,
     required: true,
   },
+  flag: {
+    type: Boolean,
+  },
 });
 
 module.exports = dynamoose.model("category", categorySchema);
 
-function addCategory(id, name, image) {
+function addCategory(id, name, image,flag) {
   const params = {
     TableName: "category",
     Item: {
       id: { S: id },
       name: { S: name },
       image: { S: image },
+      flag: { S: flag },
     },
   };
 
