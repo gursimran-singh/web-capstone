@@ -2,6 +2,10 @@ body {
 	font-family: sans-serif;
 }
 
+#root {
+    background-color: white;
+}
+
 .main {
    color : rgb(149 39 39);
 }
@@ -242,3 +246,16 @@ ftco-section {
             text-decoration: none !important;
             outline: none !important; 
         }
+
+        #menu-banner {
+            color:white;
+            position: relative;
+            background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url("../../public/images/menu-banner.png");
+            height: 450px;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+        
+        #menu-banner .banner-text {
+          color:white;
+        }    
