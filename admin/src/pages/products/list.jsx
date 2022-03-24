@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useState,useEffect } from "react";
-import axios from 'axios';
+import baseURL from "../../requestMethods.js";
 
 export default function ProductList() {
   const [data, setData] = useState();
@@ -13,7 +13,13 @@ export default function ProductList() {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
+    // { field: "id", headerName: "ID", width: 90,
+    // renderCell: (params) => {
+    //   return (
+        
+    //     <div className="productListItem"> {console.log(params.row)}</div>
+         
+    //   ); }, },
     {
       field: "product",
       headerName: "Name",
@@ -60,7 +66,7 @@ export default function ProductList() {
   ];
 
   useEffect(() => {
-      axios.get("https://6fdhemeqha.execute-api.ca-central-1.amazonaws.com/dev/api/food")
+    baseURL.get("/food")
         .then(
           (result) => {
            setData(result.data);
