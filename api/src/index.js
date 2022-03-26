@@ -21,5 +21,6 @@ app.use(bodyParser.json());
 
 app.use("/api/food", apiRouter);
 app.use("/api/category", categoriesRouter);
+app.use("/api/user", require('./routes/userRoutes'));
 
 module.exports = app;
