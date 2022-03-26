@@ -1,11 +1,10 @@
 const dynamoose = require("dynamoose");
-var AWS = require("aws-sdk");
-const DynamoDB = new AWS.DynamoDB();
+const Ulid = require("ulid");
 
 var userSchema = new dynamoose.Schema({
   id: {
     type: String,
-    required: true,
+    hashKey: true,
   },
   name: {
     type: String,
@@ -14,6 +13,8 @@ var userSchema = new dynamoose.Schema({
   email: {
     type: String,
     required: true,
+    validate:
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
   },
   password: {
     type: String,
@@ -30,44 +31,21 @@ var userSchema = new dynamoose.Schema({
   },
 });
 
-module.exports = dynamoose.model("user", userSchema);
+const User = dynamoose.model("user", userSchema);
 
-function addUser(id, name, email, password, address, status, type) {
-  const params = {
-    TableName: "user",
-    Item: {
-      id: { S: id },
-      name: { S: name },
-      email: { S: email },
-      password: { S: password },
-      address: { S: address },
-      status: { S: status },
-      type: { S: type },
-    },
-  };
-
-  DynamoDB.putItem(params, function (err) {
-    if (err) {
-      console.error("Unable to add Item", err);
-    } else {
-      console.log(`User ***${name}*** has been added`);
-    }
-  });
+function createUser(data) {
+  const newUser = new User(data);
+  newUser.id = Ulid.ulid();
+  console.log(newUser);
+  return newUser.save();
 }
 
 function getAllUsers() {
-  const params = {
-    TableName: "user",
-  };
+  return User.scan().exec();
+}
 
-  DynamoDB.scan(params, function (err, data) {
-    if (err) {
-      console.error("Unable to find User", err);
-    } else {
-      console.log(`Found ${data.Count} users`);
-      console.log(data.Items);
-    }
-  });
+function getUser(email) {
+  return User.scan().filter("email").eq(email).exec();
 }
 
 function deleteUser(id) {
@@ -86,4 +64,4 @@ function deleteUser(id) {
   });
 }
 
-module.exports = { addUser, deleteUser, getAllUsers };
+module.exports = { getUser, createUser, deleteUser, getAllUsers };
