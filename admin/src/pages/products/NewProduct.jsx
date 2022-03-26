@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import "./product.css";
 import baseURL from "../../requestMethods.js";
 
-//export default function NewProduct() {
 class Form extends Component {
 
   constructor(props) {
@@ -25,20 +24,29 @@ class Form extends Component {
       errors["name"] = "Cannot be empty";
     }
 
-    if (typeof fields["name"] !== "undefined") {
-      if (!fields["name"].match(/^[a-zA-Z]+$/)) {
+
+   
+    if (!fields["price"]) {
+      formIsValid = false;
+      errors["price"] = "Cannot be empty";
+    }
+
+
+   
+    if (typeof fields["price"] !== "undefined") {
+      if (!fields["price"].match(/^[0-9]+$/)) {
         formIsValid = false;
-        errors["name"] = "Only letters";
+        errors["price"] = "Price can be numeric only.";
       }
     }
 
-    //Email
+
     if (!fields["description"]) {
       formIsValid = false;
       errors["description"] = "Cannot be empty";
     }
 
-   
+
     this.setState({ errors: errors });
     return formIsValid;
   }
@@ -47,13 +55,13 @@ class Form extends Component {
     e.preventDefault();
 
     if (this.handleValidation()) {
-      baseURL.post("/food",  this.state.fields )
+      baseURL.post("/food", this.state.fields)
         .then(res => {
           console.log(res);
           console.log(res.data);
         });
     } else {
-      // alert("Form has errors.");
+      // show validation summary here
     }
   }
 
@@ -64,71 +72,13 @@ class Form extends Component {
   }
 
 
-  // state = {
-  //   name: '',
-  //   description: '',
-  //   category_id: '',
-  //   price: '',
-  //   image: '',
-  //   rating: ''
-  // }
-
-  // handleChange = (e) => {
-  //   const name = e.target.name;
-  //   const value = e.target.value;
-  //   this.setState({ [name]: value },
-  //     () => { this.validateField(name, value) });
-  // }
-
-  // validateField(fieldName, value) {
-  //   let fieldValidationErrors = this.state.formErrors;
-
-  //   this.setState({
-  //     formErrors: fieldValidationErrors,
-  //     emailValid: emailValid,
-  //     passwordValid: passwordValid
-  //   }, this.validateForm);
-  // }
+  render() {
+    return (
 
 
-  // validateForm() {
-  //   this.setState({ formValid: this.state.emailValid && this.state.passwordValid });
-  // }
-
-
-
-
-  // handleSubmit = event => {
-  //   event.preventDefault();
-
-  //   const user = {
-  //     name: this.state.name,
-  //     category_id:this.state.category_id,
-  //     description:this.state.description,
-  //     price:this.state.price,
-  //     rating:this.state.rating,
-  //     image:this.state.image
-  //   };
-
-  //   baseURL.post("/food", { user })
-  //     .then(res => {
-  //       console.log(res);
-  //       console.log(res.data);
-  //     })
-  // }
-
-  // errorClass(error) {
-  //   return (error.length === 0 ? '' : 'has-error');
-  // }
-
-
-   render() {
-  return(
-
-
-      <div className = "newProduct" >
+      <div className="newProduct" >
         <h1 className="addProductTitle">New Product</h1>
-        <form className="addProductForm"  onSubmit={this.contactSubmit.bind(this)}>
+        <form className="addProductForm" onSubmit={this.contactSubmit.bind(this)}>
           <div className="addProductItem">
             <label>Image</label>
             <input type="file" id="file" />
@@ -136,8 +86,8 @@ class Form extends Component {
           <div className="addProductItem">
             <label>Name</label>
             <input type="text" placeholder="Name" onChange={this.handleChange.bind(this, "name")}
-                value={this.state.fields["name"]} />
-                              <span style={{ color: "red" }}>{this.state.errors["name"]}</span>
+              value={this.state.fields["name"]} />
+            <span style={{ color: "red" }}>{this.state.errors["name"]}</span>
 
           </div>
           <div className="addProductItem">
@@ -149,13 +99,15 @@ class Form extends Component {
           </div>
           <div className="addProductItem">
             <label>Price</label>
-            <input type="text" placeholder="price" />
+            <input type="text" placeholder="price" onChange={this.handleChange.bind(this, "price")}
+              value={this.state.fields["price"]} />
+                 <span style={{ color: "red" }}>{this.state.errors["price"]}</span>
           </div>
           <div className="addProductItem">
             <label>Description</label>
-            <input type="textarea" row="2"  onChange={this.handleChange.bind(this, "description")}
-                value={this.state.fields["description"]}/>
-                              <span style={{ color: "red" }}>{this.state.errors["description"]}</span>
+            <input type="textarea" row="2" onChange={this.handleChange.bind(this, "description")}
+              value={this.state.fields["description"]} />
+            <span style={{ color: "red" }}>{this.state.errors["description"]}</span>
 
           </div>
           <button className="addProductButton" type="submit">Create</button>

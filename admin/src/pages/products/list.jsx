@@ -86,7 +86,7 @@ export default function ProductList() {
             console.log('Error', error.message);
           }
       
-        });}, [])
+        });}, []);
 
   return (
    
