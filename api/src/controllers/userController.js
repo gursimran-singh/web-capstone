@@ -1,5 +1,5 @@
 const user = require("../models/user");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { signToken } = require("../utils/sign-token");
 
 const getAllusers = (req, res) => {
