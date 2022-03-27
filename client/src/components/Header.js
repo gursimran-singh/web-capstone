@@ -1,5 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/js/dist/carousel';
+import 'bootstrap/js/src/collapse';
 import './main.css';
 
 import {Link, Outlet} from 'react-router-dom'

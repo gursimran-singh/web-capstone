@@ -1,10 +1,9 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/js/dist/carousel';
 import './main.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, Outlet } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function Banner() {
     return (
@@ -17,6 +16,7 @@ function Banner() {
         </div>
     )
 }
+
 
 function ProductList(){
     const [list, setList] = useState([]);
@@ -33,6 +33,26 @@ function ProductList(){
     fetchData();
   }, []);
 
+  
+  function searchFood(){
+    let name = document.getElementById("searchfood").value;
+    
+    // let data1 = [];
+    // const pattern = new RegExp(name.toLowerCase());
+    // console.log(pattern);
+    // list.filter((listitem) => {
+    //   console.log(listitem);
+    //   let a = pattern.test(listitem.name.toLowerCase());
+    //   console.log(a);
+    //   if(a == true){
+    //     data1.push(listitem);
+    //   }
+    // });
+    // if(name != "" && data1 != ""){
+    //   setList(data1)
+    // }
+
+  }
 
   return (
     <div className="container-fluid pb-5 pt-5">
@@ -40,8 +60,8 @@ function ProductList(){
     <div className="row">
         <div className="col-md-3">
             <form className="d-flex">
-                <input className="form-control me-2" type="search" style={{height: "43px"}} placeholder="Search Menu Here" aria-label="Search"/>
-                <button className="btn btn-red" type="submit">Search </button>
+                <input className="form-control me-2" id='searchfood' type="search" style={{height: "43px"}} placeholder="Search Menu Here" aria-label="Search"/>
+                <button className="btn btn-red" onClick={searchFood}  type="button">Search </button>
             </form>
             <div>
             <div className="card mt-4" style={{boxShadow: "0px 0px 8px 0px #00000038", padding:"10px"}}>
@@ -81,7 +101,9 @@ function ProductList(){
                         {
                             list.map( (item)=>{
                                 return (
+                                  
                                     <div className="col-md-3" key = {item.id}>
+                                      <Link to={"/food/" + item.id}>
                                     <div className="card">
                                         <img src={'images/' + item.image} className="card-img-top" alt="..."/>
                                         <div className="card-body text-center">
@@ -89,7 +111,9 @@ function ProductList(){
                                             <p className=" main">{"$" + item.price }</p>    
                                         </div>
                                     </div>
+                                    </Link>
                                 </div>
+                                
                                 )
                             })
                         }
@@ -112,13 +136,21 @@ function ProductList(){
 }
 
 
-function Menu() {
+class Menu extends React.Component {
+  constructor(props) {
+    super(props);
+    
+  }
+  
+  render() {
     return(
-        <>
-        <Banner></Banner>
-        <ProductList></ProductList>
-        </>
-    )
+      <>
+      <Banner></Banner>
+      <ProductList></ProductList>
+      </>
+  )
+  }
+    
 }
 
 

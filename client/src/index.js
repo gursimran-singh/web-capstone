@@ -9,6 +9,7 @@ import Signup from "./components/Signup";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Contactus from './components/Contactus';
 import Menu from './components/Menu';
+import Food from './components/Food';
 import Cart from "./components/Cart";
 import store from "./components/store"
 import { Provider } from "react-redux"
@@ -28,6 +29,7 @@ ReactDOM.render(
           <Route index element={<Homepage />}></Route>
           <Route path="homepage" element={<Homepage />}></Route>
           <Route path="menu" element={<Menu />}></Route>
+          <Route path="food/:id" element={<Food/>}></Route>
           <Route path="contactus" element={<Contactus />}></Route>
           <Route path="login" element={<Login />}></Route>
           <Route path="signup" element={<Signup />}></Route>
