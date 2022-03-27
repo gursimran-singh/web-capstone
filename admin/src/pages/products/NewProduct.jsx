@@ -10,6 +10,7 @@ class Form extends Component {
     this.state = {
       fields: {},
       errors: {},
+      data:[],
     };
   }
 
@@ -34,10 +35,11 @@ class Form extends Component {
 
    
     if (typeof fields["price"] !== "undefined") {
-      if (!fields["price"].match(/^[0-9]+$/)) {
-        formIsValid = false;
-        errors["price"] = "Price can be numeric only.";
-      }
+      // if()
+      // if (!fields["price"].match(/^[0-9]+$/)) {
+      //   formIsValid = false;
+      //   errors["price"] = "Price can be numeric only.";
+      // }
     }
 
 
@@ -53,7 +55,7 @@ class Form extends Component {
 
   contactSubmit(e) {
     e.preventDefault();
-
+console.log(this.state.fields);
     if (this.handleValidation()) {
       baseURL.post("/food", this.state.fields)
         .then(res => {
@@ -66,22 +68,44 @@ class Form extends Component {
   }
 
   handleChange(field, e) {
+    console.log(e);
     let fields = this.state.fields;
-    fields[field] = e.target.value;
-    this.setState({ fields });
+    if(e.target.name == "rating" || e.target.name == "price")
+    {
+      fields[field] = parseInt(e.target.value);
+      this.setState({ fields });
+    }else
+    {
+      fields[field] = e.target.value;
+      this.setState({ fields });
+    }
+    
   }
 
+  componentDidMount() {
+    baseURL.get("/category")
+      .then(response => {
+        console.log(response.data );
+        this.setState({ data: response.data });
+
+        const { schemass } = this.state; 
+        console.log(schemass);
+      })
+      .catch(error => console.log(error.response));
+  }
 
   render() {
     return (
-
-
       <div className="newProduct" >
         <h1 className="addProductTitle">New Product</h1>
         <form className="addProductForm" onSubmit={this.contactSubmit.bind(this)}>
           <div className="addProductItem">
             <label>Image</label>
-            <input type="file" id="file" />
+            <input type="text" placeholder="Image" onChange={this.handleChange.bind(this, "image")}
+              value={this.state.fields["image"]} />
+               <input type="text" placeholder="Rating" onChange={this.handleChange.bind(this, "rating")}
+              value={this.state.fields["rating"]} name="rating" />
+            {/* <input type="file" id="file" /> */}
           </div>
           <div className="addProductItem">
             <label>Name</label>
@@ -92,15 +116,24 @@ class Form extends Component {
           </div>
           <div className="addProductItem">
             <label>Category</label>
-            <select name="active" id="active">
-              <option value="yes">cate1</option>
-              <option value="no">cate2</option>
-            </select>
+            <select  onChange={this.handleChange.bind(this, "categoryId")}>
+                {this.state.data.map(obj => {
+                  return (
+                    <option
+                      key={obj.id}
+                      value={obj.id}
+                      onChange={this.handleChange.bind(this, "categoryId")}
+                    >
+                      {obj.name}
+                    </option>
+                  );
+                })}
+              </select>
           </div>
           <div className="addProductItem">
             <label>Price</label>
             <input type="text" placeholder="price" onChange={this.handleChange.bind(this, "price")}
-              value={this.state.fields["price"]} />
+              value={this.state.fields["price"]} name="price" />
                  <span style={{ color: "red" }}>{this.state.errors["price"]}</span>
           </div>
           <div className="addProductItem">
