@@ -10,6 +10,15 @@ export default function ProductList() {
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
+
+    baseURL.delete("/food/delete",id)
+    .then(response => {
+
+      // success message 
+      
+    })
+    .catch(error => console.log(error.response));
+          
   };
 
   const columns = [
