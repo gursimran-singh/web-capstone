@@ -1,5 +1,5 @@
 import React from "react";
-import '../css/contactus.css'
+import './contactus.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitterSquare } from "@fortawesome/free-brands-svg-icons";
 import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
@@ -10,7 +10,7 @@ import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
 import { useDebouncedCallback } from 'use-debounce';
- 
+
 export default function Contactus() {
 
   const [username, setUsername]=useState();
