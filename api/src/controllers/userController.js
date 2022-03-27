@@ -26,14 +26,13 @@ const doLogin = (req, res) => {
             const token = signToken(usr[0].email);
             res.json({ token: token }).status(200);
           } else {
-            res.json({ error: "Invalid credentials 2" }).status(404);
+            res.json({ error: "Invalid credentials" }).status(404);
           }
         } else {
-          res.json({ error: "Invalid credentials 1" }).status(404);
+          res.json({ error: "Invalid credentials" }).status(404);
         }
       })
       .catch((err) => {
-        console.log(err);
         res.json({ error: err }).status(400);
       });
   } else {
@@ -46,10 +45,10 @@ const getLoggedInUser = (req, res) => {
     user
       .getUser(req.decoded.id)
       .then((usr) => {
-        if(usr.count != 0){
+        if (usr.count != 0) {
           res.json(usr.toJSON()).status(200);
         } else {
-          res.json({error: "Profile not found"}).status(404)
+          res.json({ error: "Profile not found" }).status(404);
         }
       })
       .catch((err) => {
@@ -86,9 +85,37 @@ const createUser = (req, res) => {
   }
 };
 
+const updateUser = (req, res) => {
+  if (req.decoded.id) {
+    user
+      .getUser(req.decoded.id)
+      .then((usr) => {
+        if (usr.count != 0) {
+          if (req.body.password) {
+            req.body.password = bcrypt.hashSync(req.body.password, 5);
+          }
+          user
+            .updateUser(usr[0].id, req.body)
+            .then((usr) => {
+              res.json({ user: usr }).status(200);
+            })
+            .catch((err) => {
+              res.json({ error: err }).status(400);
+            });
+        } else {
+          res.json({ error: "Profile not found" }).status(404);
+        }
+      })
+      .catch((err) => {
+        res.json({ error: err }).status(400);
+      });
+  }
+};
+
 module.exports = {
   getAllusers,
   doLogin,
   createUser,
+  updateUser,
   getLoggedInUser,
 };
