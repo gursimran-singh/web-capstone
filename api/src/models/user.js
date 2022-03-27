@@ -36,7 +36,6 @@ const User = dynamoose.model("user", userSchema);
 function createUser(data) {
   const newUser = new User(data);
   newUser.id = Ulid.ulid();
-  console.log(newUser);
   return newUser.save();
 }
 
@@ -46,6 +45,10 @@ function getAllUsers() {
 
 function getUser(email) {
   return User.scan().filter("email").eq(email).exec();
+}
+
+function updateUser(id, body) {
+  return User.update({ id: id }, body);
 }
 
 function deleteUser(id) {
@@ -64,4 +67,4 @@ function deleteUser(id) {
   });
 }
 
-module.exports = { getUser, createUser, deleteUser, getAllUsers };
+module.exports = { getUser, createUser, deleteUser, updateUser, getAllUsers };
