@@ -65,7 +65,7 @@ export default function Signup() {
     dispatch(signup({ name, email, password }))
       .unwrap()
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.hasOwnProperty("user")) {
           setSuccessful(true);
         } else {

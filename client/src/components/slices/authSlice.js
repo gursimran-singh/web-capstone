@@ -30,7 +30,7 @@ const loginAuth = (email, password) => {
 const user = JSON.parse(localStorage.getItem("user"));
 
 export const signup = createAsyncThunk(
-    "auth/register",
+    "auth/signup",
     async ({ name, email, password }, thunkAPI) => {
         try {
             const response = await axios.post(SIGNUP_URL, {
@@ -71,7 +71,7 @@ export const login = createAsyncThunk(
                 thunkAPI.dispatch(setMessage("Login successfully."));
                
             }else{
-                thunkAPI.dispatch(setMessage(data.error || "Login successfully."));
+                thunkAPI.dispatch(setMessage(data.error || "Login Failed."));
             }
             return { user: data };
         } catch (error) {
