@@ -38,7 +38,7 @@ export default function Login(props) {
 
     dispatch(login({ email, password }))
       .unwrap()
-      .then((res) => {
+      .then(() => {
 
         setLoading(false);
       })
