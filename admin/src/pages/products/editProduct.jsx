@@ -11,6 +11,7 @@ const Product = props => {
     const [currentProduct, setcurrentProduct] = useState(initialProdState);
     const [message, setMessage] = useState("");
     const [errorMsg, seterrorMsg] = useState("");
+    const [objCategory, setCategory] = useState([]);
 
     const location = useLocation();
     const prodId = location.pathname.split("/")[2];
@@ -18,6 +19,7 @@ const Product = props => {
     const getTutorial = id => {
         baseURL.get('/food/' + id)
             .then(response => {
+                getCategories();
                 setcurrentProduct(response.data);
             })
             .catch(e => {
@@ -50,7 +52,6 @@ const Product = props => {
 
     const handleValidation = () => {
         let fields = currentProduct;
-        let errors = {};
         let formIsValid = true;
 
         //Name
@@ -71,8 +72,6 @@ const Product = props => {
                 }
             }
         }
-
-
         if (!fields["description"]) {
             formIsValid = false;
             seterrorMsg({ ["description"]: "Cannot be empty" });
@@ -85,6 +84,14 @@ const Product = props => {
         return formIsValid;
     };
 
+    const getCategories = () => {
+        baseURL.get("/category")
+            .then(response => {
+                setCategory(response.data);
+            })
+            .catch(error => console.log(error.response));
+    };
+
     return (
         <div className="newProduct" >
             <h1 className="addProductTitle">Update Product Information</h1>
@@ -93,7 +100,6 @@ const Product = props => {
                     <label>Image</label>
                     <input type="text" name="image" placeholder="Image" onChange={handleInputChange}
                         value={currentProduct.image} />
-
                 </div>
                 <div className="addProductItem">
                     <label>Name</label>
@@ -104,19 +110,20 @@ const Product = props => {
                 </div>
                 <div className="addProductItem">
                     <label>Category</label>
-                    {/* <select onChange={handleInputChange}>
-                            {this.state.data.map(obj => {
-                                return (
-                                    <option
-                                        key={obj.id}
-                                        value={currentProduct.category_id}
-                                        onChange={handleInputChange}
-                                    >
-                                        {obj.name}
-                                    </option>
-                                );
-                            })}
-                        </select> */}
+                    <select name="category_id" onChange={handleInputChange} value={currentProduct.category_id}>
+                        {objCategory.map(obj => {
+                            return (
+                                <option
+                                    key={obj.id}
+                                    value={obj.id}
+                                    onChange={handleInputChange}
+
+                                >
+                                    {obj.name}
+                                </option>
+                            );
+                        })}
+                    </select>
                 </div>
                 <div className="addProductItem">
                     <label>Price</label>
@@ -148,7 +155,15 @@ const Product = props => {
             >
                 Update
             </button>
-            <p>{message}</p>
+            {
+                message && (
+                    <div className="form-group">
+                        <div className="alert alert-danger">
+                            {message}
+                        </div>
+                    </div>
+                )
+            }
         </div>
     );
 };

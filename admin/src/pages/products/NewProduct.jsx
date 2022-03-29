@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import "./product.css";
 import baseURL from "../../requestMethods.js";
+import { Navigate } from "react-router-dom";
 
 class Form extends Component {
 
@@ -10,6 +11,7 @@ class Form extends Component {
       fields: {},
       errors: {},
       data: [],
+      redirect: null,
     };
   }
 
@@ -24,29 +26,24 @@ class Form extends Component {
       formIsValid = false;
       errors["name"] = "Cannot be empty";
     }
-
-
-
     if (!fields["price"]) {
       formIsValid = false;
       errors["price"] = "Cannot be empty";
     }
-
-
-
     if (typeof fields["price"] !== "undefined") {
       if (!fields["price"].match(/^[0-9]+$/)) {
         formIsValid = false;
         errors["price"] = "Price can be numeric only.";
       }
     }
-
-
     if (!fields["description"]) {
       formIsValid = false;
       errors["description"] = "Cannot be empty";
     }
-
+    if (!fields["rating"]) {
+      formIsValid = false;
+      errors["rating"] = "Cannot be empty";
+    }
 
     this.setState({ errors: errors });
     return formIsValid;
@@ -55,13 +52,12 @@ class Form extends Component {
   contactSubmit(e) {
     e.preventDefault();
 
+
     if (this.handleValidation()) {
       baseURL.post("/food", this.state.fields)
         .then(res => {
           if (res.status == 200) {
-            // this.props.history.goBack();
-            // return <Navigate to="/products" />
-
+            this.setState({ redirect: "/products" });
           }
         });
     } else {
@@ -89,6 +85,9 @@ class Form extends Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Navigate to={this.state.redirect} />
+    }
     return (
       <div className="newProduct" >
         <h1 className="addProductTitle">New Product</h1>
@@ -97,8 +96,7 @@ class Form extends Component {
             <label>Image</label>
             <input type="text" placeholder="Image" onChange={this.handleChange.bind(this, "image")}
               value={this.state.fields["image"]} />
-            <input type="text" placeholder="Rating" onChange={this.handleChange.bind(this, "rating")}
-              value={this.state.fields["rating"]} name="rating" />
+
             {/* <input type="file" id="file" /> */}
           </div>
           <div className="addProductItem">
@@ -110,7 +108,7 @@ class Form extends Component {
           </div>
           <div className="addProductItem">
             <label>Category</label>
-            <select onChange={this.handleChange.bind(this, "category_id")}>
+            <select onChange={this.handleChange.bind(this, "category_id")} >
               {this.state.data.map(obj => {
                 return (
                   <option
@@ -131,6 +129,12 @@ class Form extends Component {
             <span style={{ color: "red" }}>{this.state.errors["price"]}</span>
           </div>
           <div className="addProductItem">
+            <label>Rating</label>
+            <input type="text" placeholder="Rating" onChange={this.handleChange.bind(this, "rating")}
+              value={this.state.fields["rating"]} name="rating" />
+            <span style={{ color: "red" }}>{this.state.errors["rating"]}</span>
+          </div>
+          <div className="addProductItem">
             <label>Description</label>
             <input type="textarea" row="2" onChange={this.handleChange.bind(this, "description")}
               value={this.state.fields["description"]} />
@@ -140,6 +144,8 @@ class Form extends Component {
           <button className="addProductButton" type="submit">Create</button>
         </form>
       </div>
+
+      
     )
   }
 }
