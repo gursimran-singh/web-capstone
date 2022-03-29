@@ -333,8 +333,11 @@ margin-top: 0.3125rem;
 } 
 .cart ul li .right-part input{
   max-width:50px;
-
 } 
+.cart ul li .right-part #quantity{
+  width: 100px;
+  max-width: 100px;
+}
 .cart ul li .right-part p:not(:last-child){
   margin-bottom: 0.3125rem;
 }
