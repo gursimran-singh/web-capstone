@@ -13,7 +13,7 @@ export const cartSlice  = createSlice({
             else{
                 let existFlag =false;
                 state.value.forEach((item, index)=>{
-                    if(item.dishID === action.payload.dishID){
+                    if(item.item_id === action.payload.item_id){
                         state.value[index].quantity += action.payload.quantity;
                         existFlag = true;
                     }

@@ -4,6 +4,10 @@ import 'bootstrap/js/dist/carousel';
 import 'bootstrap/js/src/collapse';
 import './main.css';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+
+
 import {Link, Outlet} from 'react-router-dom'
 
 function Header(){
@@ -29,6 +33,10 @@ function Header(){
                                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
                                 <button className="btn btn-red" type="submit">Search</button>
                             </form>
+                            {/* add link to shopping cart */}
+                            <div className="to-cart" style={{marginLeft:"0.625rem"}}>
+                              <Link to="./cart"><FontAwesomeIcon icon={faShoppingCart} style={{color:"#913838", fontSize:"1.25rem",}} /></Link>
+                            </div>
                         </div>
                     </div>
                 </nav>
