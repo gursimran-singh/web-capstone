@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from "react";
 import { changeCart } from "./slices/cartSlice";
 import './contactus.css'
+
 // let shopCart = [
 //   {
 //     id: 1,
@@ -30,13 +31,13 @@ import './contactus.css'
 export default function Cart() {
   const shopCart = useSelector((state) => state.cart.value);
   const dispatch = useDispatch();
+
   const removeItem = (id) => {
     const newList = shopCart.filter((e) => e.dishID !== id);
     dispatch(changeCart(newList));
   };
 
   const changeItem = (id, op, quantity) => {
-    
     let newList = JSON.parse(JSON.stringify(shopCart));  
     let item = newList.find((e) => e.dishID === id);
     if (op === "add") {

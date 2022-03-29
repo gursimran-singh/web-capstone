@@ -3,34 +3,30 @@ import { setMessage } from "./messageSlice";
 
 import axios from "axios";
 
-// import AuthService from "../services/auth.service";
+
 const SIGNUP_URL = "https://6fdhemeqha.execute-api.ca-central-1.amazonaws.com/dev/api/user/create";
 const LOGIN_URL = "https://6fdhemeqha.execute-api.ca-central-1.amazonaws.com/dev/api/user/login";
 
 const loginAuth = (email, password) => {
-    return axios
-        .post(LOGIN_URL, {
+    return axios.post(LOGIN_URL, {
             email,
             password,
         })
         .then((response) => {
-            // console.log(response);
-            if (response.data.token) {
-                localStorage.setItem("user", JSON.stringify(response.data));
+            if (response.data.hasOwnProperty("token")) {
+                sessionStorage.setItem("user", JSON.stringify(response.data));
             }
-            return response.data;
+            return response;
         });
 };
 
 // const logoutAuth = () => {
-//     localStorage.removeItem("user");
+//     sessionStorage.removeItem("user");
 // };
 
 
-const user = JSON.parse(localStorage.getItem("user"));
-
 export const signup = createAsyncThunk(
-    "auth/signup",
+    "signup",
     async ({ name, email, password }, thunkAPI) => {
         try {
             const response = await axios.post(SIGNUP_URL, {
@@ -41,20 +37,14 @@ export const signup = createAsyncThunk(
             if (response.data.hasOwnProperty("user")) {
                 
                 thunkAPI.dispatch(setMessage("You have registered successfully."));
-                // return response.data;
+                
             }
             else {
                 thunkAPI.dispatch(setMessage(response.data.error || "Failed registration!"));
             }
             return response.data;
         } catch (error) {
-            console.log(error);
-            const message =
-                (
-                    error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
+            const message =error.message ||
                 error.toString();
             thunkAPI.dispatch(setMessage(message));
             return thunkAPI.rejectWithValue();
@@ -63,23 +53,19 @@ export const signup = createAsyncThunk(
 );
 
 export const login = createAsyncThunk(
-    "auth/login",
+    "login",
     async ({ email, password }, thunkAPI) => {
         try {
-            const data = await loginAuth(email, password);
-            if(data.hasOwnProperty("token")){
+            const response = await loginAuth(email, password);
+            if(response.data.hasOwnProperty("token")){
                 thunkAPI.dispatch(setMessage("Login successfully."));
-               
+                          
             }else{
-                thunkAPI.dispatch(setMessage(data.error || "Login Failed."));
+                thunkAPI.dispatch(setMessage(response.data.error || "Login Failed."));
             }
-            return { user: data };
+            return response.data;
         } catch (error) {
-            const message =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
+            const message = error.message ||
                 error.toString();
             thunkAPI.dispatch(setMessage(message));
             return thunkAPI.rejectWithValue();
@@ -87,38 +73,43 @@ export const login = createAsyncThunk(
     }
 );
 
-// export const logout = createAsyncThunk("auth/logout", async () => {
+// export const logout = createAsyncThunk("logout", async () => {
 //     await logoutAuth();
 // });
-
-const initialState = user
-    ? { isLoggedIn: true, user }
-    : { isLoggedIn: false, user: null };
+const storedToken = JSON.parse(sessionStorage.getItem("user"));
+const initialState = storedToken? { loggedIn: true, token: storedToken.token}: { loggedIn: false, token: null };
 
 const authSlice = createSlice({
     name: "auth",
     initialState,
     extraReducers: {
         [signup.fulfilled]: (state, action) => {
-            state.isLoggedIn = false;
+            state.loggedIn = false;
         },
         [signup.rejected]: (state, action) => {
-            state.isLoggedIn = false;
+            state.loggedIn = false;
         },
         [login.fulfilled]: (state, action) => {
-            state.isLoggedIn = true;
-            state.user = action.payload.user;
+
+            if(action.payload.hasOwnProperty('token')){
+            state.loggedIn = true;           
+            state.token = action.payload.token;
+            }
+            else {
+                state.loggedIn =false;
+                state.token = null;
+            }
         },
         [login.rejected]: (state, action) => {
-            state.isLoggedIn = false;
-            state.user = null;
+          
+            state.loggedIn = false;
+            state.token = null;
         },
         // [logout.fulfilled]: (state, action) => {
-        //     state.isLoggedIn = false;
-        //     state.user = null;
+        //     state.loggedIn = false;
+        //     state.token = null;
         // },
     },
 });
 
-const { reducer } = authSlice;
-export default reducer;
+export default authSlice.reducer;
