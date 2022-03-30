@@ -434,3 +434,19 @@ margin-top: 0.3125rem;
 .checkout .right-part table td{
   padding: 0.625rem 0.3125rem;
 }
+.checkout .place_order{
+  /* align-self: flex-end; */
+  text-align: end;
+  margin-top: 2rem;
+}
+.checkout .btn_order{
+  width: 10rem;
+  background-color: #913838;
+  color:#eee;
+  border: 1px solid #913838;
+}
+.checkout .btn_order:hover{
+ 
+  background-color: transparent;
+  color: #913838;
+}
