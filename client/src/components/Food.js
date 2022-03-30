@@ -7,10 +7,11 @@ import { Link, Navigate, Outlet, useParams } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import {  useDispatch } from 'react-redux';
-import { addDish } from "./slices/cartSlice";
+import { addDishToCart } from "./slices/cartSlice";
 
 function FoodItem() {
     const [item, setItem] = useState({});
+    const [addedToCart, setAddedToCart] = useState(false);
     const dispatch = useDispatch();
 
     const { id } = useParams();
@@ -41,12 +42,17 @@ function FoodItem() {
         dish.item_price=Number(item.price);
         dish.quantity=parseInt(quantity);
         dish.item_image = item.image;
-        if(dispatch(addDish(dish)).payload.item_id){
+        if(dispatch(addDishToCart(dish)).payload.item_id){
             alert(`You have added ${quantity} courses of ${item.name}`);
+            setAddedToCart(true);
            
         }
         
      };
+
+     if(addedToCart){
+       return   <Navigate to='/menu' />;
+     }
 
     return (
         <>

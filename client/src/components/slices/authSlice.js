@@ -15,14 +15,19 @@ const loginAuth = (email, password) => {
         .then((response) => {
             if (response.data.hasOwnProperty("token")) {
                 sessionStorage.setItem("user", JSON.stringify(response.data));
+                
             }
+            // console.log(JSON.parse(sessionStorage.getItem("user")));
+            // console.log(response);
             return response;
+            
         });
 };
 
-// const logoutAuth = () => {
-//     sessionStorage.removeItem("user");
-// };
+const logoutAuth = () => {
+    sessionStorage.removeItem("user");
+    
+};
 
 
 export const signup = createAsyncThunk(
@@ -73,11 +78,12 @@ export const login = createAsyncThunk(
     }
 );
 
-// export const logout = createAsyncThunk("logout", async () => {
-//     await logoutAuth();
-// });
-const storedToken = JSON.parse(sessionStorage.getItem("user"));
-const initialState = storedToken? { loggedIn: true, token: storedToken.token}: { loggedIn: false, token: null };
+export const logout = createAsyncThunk("logout", async () => {
+    await logoutAuth();
+   
+});
+const storedUser = JSON.parse(sessionStorage.getItem("user"));
+const initialState = storedUser? { loggedIn: true, user: storedUser}: { loggedIn: false, user: null };
 
 const authSlice = createSlice({
     name: "auth",
@@ -90,25 +96,27 @@ const authSlice = createSlice({
             state.loggedIn = false;
         },
         [login.fulfilled]: (state, action) => {
-
+            
             if(action.payload.hasOwnProperty('token')){
             state.loggedIn = true;           
-            state.token = action.payload.token;
+            state.user = action.payload;
+          
             }
             else {
                 state.loggedIn =false;
-                state.token = null;
+                state.user = null;
             }
         },
         [login.rejected]: (state, action) => {
           
             state.loggedIn = false;
-            state.token = null;
+            state.user = null;
         },
-        // [logout.fulfilled]: (state, action) => {
-        //     state.loggedIn = false;
-        //     state.token = null;
-        // },
+        [logout.fulfilled]: (state, action) => {
+            state.loggedIn = false;
+            state.user = null;
+            
+        },
     },
 });
 

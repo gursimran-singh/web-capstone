@@ -16,6 +16,7 @@ export default function Login() {
   const  message  = useSelector((state) => state.message.message);
   // const token =useSelector((state) => state.auth.token);
   // console.log(token);
+  const loggedIn = useSelector((state)=>state.auth.loggedIn);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -53,7 +54,7 @@ export default function Login() {
       });
   };
 
-  if (JSON.parse(sessionStorage.getItem("user"))) {
+  if (loggedIn) {
     return <Navigate to="/menu" />;
   }
 
