@@ -1,41 +1,42 @@
 import "./category.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { productRows } from "../../dummyData";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import baseURL from "../../requestMethods.js";
 
 export default function ProductList() {
-  const [data, setData] = useState(productRows);
+  const [data, setData] = useState();
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
+    console.log(id);
+    baseURL.put("/category/delete/" + id)
+      .then(response => {
+
+        // success message 
+
+      })
+      .catch(error => console.log(error.response));
+
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
     {
-      field: "product",
-      headerName: "Product",
+      field: "Category",
+      headerName: "Name",
       width: 200,
       renderCell: (params) => {
         return (
           <div className="productListItem">
-            <img className="productListImg" src={params.row.img} alt="" />
             {params.row.name}
           </div>
         );
       },
     },
-    { field: "stock", headerName: "Stock", width: 200 },
     {
-      field: "status",
-      headerName: "Status",
-      width: 120,
-    },
-    {
-      field: "price",
-      headerName: "Price",
+      field: "Status",
+      headerName: "flag",
       width: 160,
     },
     {
@@ -45,7 +46,7 @@ export default function ProductList() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/product/" + params.row.id}>
+            <Link to={"/categories/" + params.row.id}>
               <button className="productListEdit">Edit</button>
             </Link>
             <DeleteOutline
@@ -58,21 +59,43 @@ export default function ProductList() {
     },
   ];
 
+  useEffect(() => {
+    baseURL.get("/category")
+      .then(
+        (result) => {
+          setData(result.data);
+          console.log(data);
+        },
+      ).catch(function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+
+      });
+  }, []);
+
   return (
-   
+
     <div className="productList">
-       <div className="datatableTitle">
-         Categories
+      <div className="datatableTitle">
+        Categories
         <Link to="/categories/newCategory" className="link">
-        Add New Category
+          Add New Category
         </Link>
       </div>
       <DataGrid
         rows={data}
         disableSelectionOnClick
         columns={columns}
-        pageSize={8}
-        checkboxSelection
+        pageSize={10}
       />
     </div>
   );

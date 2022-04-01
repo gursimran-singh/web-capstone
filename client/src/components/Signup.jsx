@@ -8,10 +8,11 @@ import { clearMessage } from "./slices/messageSlice";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "./contactus.css";
+import { Link } from "react-router-dom";
 
 export default function Signup() {
   const [successful, setSuccessful] = useState(false);
-  const { message } = useSelector((state) => state.message);
+  const message = useSelector((state) => state.message.message);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,22 +31,22 @@ export default function Signup() {
     name: Yup.string()
       .test(
         "len",
-        "The username must be between 3 and 20 characters.",
+        "Username must be between 5 and 20 characters.",
         (val) =>
-          val && val.toString().length >= 3 && val.toString().length <= 20
+          val && val.toString().length >= 5 && val.toString().length <= 20
       )
-      .required("This field is required!"),
+      .required("Username is required!"),
     email: Yup.string()
       .email("This is not a valid email.")
-      .required("This field is required!"),
+      .required("Email address is required!"),
     password: Yup.string()
       .test(
         "len",
-        "The password must be between 6 and 40 characters.",
+        "The password must be between 6 and 30 characters.",
         (val) =>
-          val && val.toString().length >= 6 && val.toString().length <= 40
+          val && val.toString().length >= 6 && val.toString().length <= 30
       )
-      .required("This field is required!"),
+      .required("Password is required!"),
     cfm_password: Yup.string()
       .required("Confirm Password is required")
       .oneOf([Yup.ref("password")], "Password must match"),
@@ -55,19 +56,17 @@ export default function Signup() {
       .oneOf([true], "Terms should be agreed."),
   });
 
-  const handleRegister = (formValue) => {
-    // console.log(formValue);
-    const { name, email, password } = formValue;
-    // console.log(username + "---" + email + "----" + password);
-
+  const handleSignup = (submitVal) => {
+    
+    const { name, email, password } = submitVal;
     setSuccessful(false);
-
     dispatch(signup({ name, email, password }))
       .unwrap()
       .then((res) => {
         // console.log(res);
         if (res.hasOwnProperty("user")) {
           setSuccessful(true);
+          
         } else {
           setSuccessful(false);
         }
@@ -77,6 +76,12 @@ export default function Signup() {
       });
   };
 
+
+  // if (successful) {
+    // return <Navigate to="/login" />;
+
+  // }
+
   return (
     <div className="signup-wrap">
       <div className="signup">
@@ -84,7 +89,7 @@ export default function Signup() {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleRegister}
+          onSubmit={handleSignup}
         >
           <Form className="signup-form">
             {!successful && (
@@ -94,7 +99,7 @@ export default function Signup() {
                   <Field name="name" type="text" className="form-control" />
                   <ErrorMessage
                     name="name"
-                    component="div"
+                    component="p"
                     className="alert alert-danger"
                   />
                 </div>
@@ -104,7 +109,7 @@ export default function Signup() {
                   <Field name="email" type="email" className="form-control" />
                   <ErrorMessage
                     name="email"
-                    component="div"
+                    component="p"
                     className="alert alert-danger"
                   />
                 </div>
@@ -118,7 +123,7 @@ export default function Signup() {
                   />
                   <ErrorMessage
                     name="password"
-                    component="div"
+                    component="p"
                     className="alert alert-danger"
                   />
                 </div>
@@ -131,7 +136,7 @@ export default function Signup() {
                   />
                   <ErrorMessage
                     name="cfm_password"
-                    component="div"
+                    component="p"
                     className="alert alert-danger"
                   />
                 </div>
@@ -141,17 +146,16 @@ export default function Signup() {
                     name="terms"
                     type="checkbox"
                     id="terms"
-                    // className="form-control"
-                  />{" "}
+                  />
                   <label htmlFor="terms">
-                    &nbsp;I agree the
+                    &nbsp;&nbsp;I agree the
                     <a href="#">
                       <strong>Terms and Conditions</strong>
                     </a>
                   </label>
                   <ErrorMessage
                     name="terms"
-                    component="div"
+                    component="p"
                     className="alert alert-danger"
                   />
                 </div>
@@ -168,22 +172,25 @@ export default function Signup() {
             )}
           </Form>
         </Formik>
-        {message && (
-          <div className="signup-form form-group">
+        {
+         
+        message && (
+          <div className="form-group">
             <div
               className={
                 successful ? "alert alert-success" : "alert alert-danger"
               }
               role="alert"
             >
-              <p> {message}</p>
-              
-               
+             { successful ?(<><p> {message}</p>
+                              <p><Link to='/login'>Go to Login</Link></p></>):(<p> {message}</p>)}
               
             </div>
           </div>
         )}
       </div>
+
+      
     </div>
   );
 }

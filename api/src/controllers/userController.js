@@ -24,7 +24,13 @@ const doLogin = (req, res) => {
           if (bcrypt.compareSync(req.body.password, usr[0].password)) {
             //generate jwt token
             const token = signToken(usr[0].email);
-            res.json({ token: token }).status(200);
+            const _usr = {
+              id: usr[0].id,
+              name: usr[0].name,
+              eamil: usr[0].email,
+              address: usr[0].address,
+            };
+            res.json({ token: token, user: _usr }).status(200);
           } else {
             res.json({ error: "Invalid credentials" }).status(404);
           }
