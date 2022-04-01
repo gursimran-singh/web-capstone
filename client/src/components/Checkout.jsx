@@ -1,51 +1,92 @@
 import React from "react";
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "./contactus.css";
-
-const initialValues = {
-  address: "",
-  city: "",
-  postcode: "",
-  firstname: "",
-  lastname: "",
-  phone:"",
-  email:"",
-};
-const validationSchema = Yup.object().shape({
-  firstname: Yup.string().required("Frist name is required!"),
-  email: Yup.string()
-    .email("This is not a valid email.")
-    .required("Email address is required!"),
-  lastname: Yup.string().required("Last name is required!"),
-  city: Yup.string().required("City is Required"),
-  postcode: Yup.string().required("Post code is required"),
-  phone: Yup.string().required("Phone number is required"),
-  address: Yup.string().required("Address is required"),
-});
+import { Navigate, Link} from "react-router-dom";
 
 export default function Checkout() {
   const dishList = useSelector((state) => state.cart.dishList);
-  const [city, setCity] = useState("");
+  const loggedIn = useSelector((state)=>state.auth.loggedIn);
+  // const [paymentSec, setPaymentSec] = useState(false);
+
+  const initialValues = {
+    address: "",
+    city: "",
+    state:"",
+    postcode: "",
+    firstname: "",
+    lastname: "",
+    phone:"",
+  
+  };
+  const validationSchema = Yup.object().shape({
+    firstname: Yup.string().required("Frist name is required!"),
+    lastname: Yup.string().required("Last name is required!"),
+    city: Yup.string().required("City is Required"),
+    postcode: Yup.string().required("Post code is required"),
+    phone: Yup.string().required("Phone number is required"),
+    address: Yup.string().required("Address is required"),
+    state: Yup.string().required("State is required"),
+  });
+  
+  
 
   function subTotal(cartList) {
     let sum = 0;
     for (let i = 0; i < cartList.length; i++) {
       sum += cartList[i].item_price * cartList[i].quantity;
     }
-
     return sum;
   }
-  const shippingFee = dishList.length === 0 ? 0 : 7;
-  console.log(subTotal(dishList));
-  let totalAmount = (shippingFee + subTotal(dishList)).toFixed(2);
+  let totalQty = 0;
+  for (let i = 0; i < dishList.length; i++) {
+    totalQty += dishList[i].quantity;
+  }
+  const shippingFee = 7 * Math.floor(totalQty/10+1);
 
-  const placeOrder = () => {};
+  let totalAmount = Math.round((shippingFee + subTotal(dishList))*100/100);
 
+  const placeOrder = (submitVal) => {
+
+    const storedUser = JSON.parse(sessionStorage.getItem("user"));
+    let order_date = new Date()
+    
+    // console.log(submitVal);
+    // console.log(storedUser);
+    let order={};
+    order.dish_list = dishList;
+    order.user_id = storedUser.user.id;
+    order.order_date = order_date.toLocaleString();
+    order.address = submitVal.address+ ", " + submitVal.city + ", " + submitVal.state + " " + submitVal.postcode;
+    order.customer_name = submitVal.firstname + " " + submitVal.lastname;
+    order.phone = submitVal.phone;
+    order.payment= false;
+    order.total_amount = totalAmount;
+    console.log(order);
+  };
+
+ 
+  if(!loggedIn){
+    return <Navigate to="/login" />;
+  }
+  if (dishList.length === 0) {
+    return (
+      <div className="checkout">
+      <div className="alcontent">
+        <div className="alcontent-area">
+          <h3>Check Out</h3>
+          <p>There is no dish in your cart. Let's go to get some food.</p>
+          <p>
+            <Link to="/menu">Menu</Link>
+          </p>
+        </div>
+      </div>
+      </div>
+    );
+  }
   return (
     <div className="checkout">
       <div className="alcontent">
@@ -87,6 +128,23 @@ export default function Checkout() {
                       <br />
                       <ErrorMessage
                         name="city"
+                        component="p"
+                        className="alert alert-danger"
+                      />
+                    </div>
+
+                    <div style={{margin:"0 1rem"}}>
+                      <label htmlFor="state">
+                        State <span className="star">*</span>
+                      </label>
+                      <br />
+                      <Field
+                        type="text"
+                        name="state"
+                      />
+                      <br />
+                      <ErrorMessage
+                        name="state"
                         component="p"
                         className="alert alert-danger"
                       />
@@ -145,20 +203,6 @@ export default function Checkout() {
                     </p>
                     <ErrorMessage
                       name="phone"
-                      component="p"
-                      className="alert alert-danger"
-                    />
-                  </div>
-                  <div>
-                    <p>
-                      <label htmlFor="email">
-                        Email <span className="star">*</span>
-                      </label>
-                      <br />
-                      <Field type="email" name="email" />
-                    </p>
-                    <ErrorMessage
-                      name="email"
                       component="p"
                       className="alert alert-danger"
                     />
