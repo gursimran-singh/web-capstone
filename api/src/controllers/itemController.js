@@ -15,7 +15,7 @@ let getAllItems = (req, res) => {
     docClient.scan(params, (err, items) => {
       if (err) {
         console.log(err);
-        return res.json("Item not found", err).status(404);
+        return res.status(400).json("Item not found", err);
       } else {
         var item = items.Items;
         const params1 = {
@@ -23,7 +23,7 @@ let getAllItems = (req, res) => {
         };
         docClient.scan(params1, (err, categories) => {
           if (err) {
-            return res.json("category not found", err).status(404);
+            return res.status(400).json("category not found", err);
           } else {
             var category = categories.Items;
             var allItems = [];
@@ -35,13 +35,13 @@ let getAllItems = (req, res) => {
                 }
               });
             });
-            return res.json(allItems).status(200);
+            return res.status(200).json(allItems);
           }
         });
       }
     });
   } catch (err) {
-    res.json(err).status(404);
+    res.status(400).json(err);
   }
 };
 
@@ -56,12 +56,10 @@ let getOneItem = (req, res) => {
     };
     docClient.get(params, (err, itemData) => {
       if (Object.keys(itemData).length === 0) {
-        res
-          .json({ message: "id does not found " })
-          .status(404);
+        res.status(400).json({ message: "id does not found " });
         return;
       } else if (err) {
-        res.json(err).status(404);
+        res.status(400).json(err);
         return;
       } else {
         var item = itemData.Item;
@@ -70,13 +68,13 @@ let getOneItem = (req, res) => {
         };
         docClient.scan(params1, (err, categories) => {
           if (err) {
-            return res.json("category not found").status(404);
+            return res.status(400).json("category not found");
           } else {
             var category = categories.Items;
             category.forEach((categoryCID) => {
               if (item.category_id == categoryCID.id) {
                 item["category"] = categoryCID;
-                return res.json(item).status(200);
+                return res.status(200).json(item);
               }
             });
           }
@@ -84,7 +82,7 @@ let getOneItem = (req, res) => {
       }
     });
   } catch (err) {
-    return res.json(err).status(404);
+    return res.status(400).json(err);
   }
 };
 
@@ -106,10 +104,10 @@ let postOneItem = (req, res) => {
     new AWS.DynamoDB().putItem(params, (err, data) => {
       if (err) {
         console.log(err);
-        return res.json(err).status(400);
+        return res.status(400).json(err);
       } else {
         console.log("Item has been added");
-        return res.json(data).status(200);
+        return res.status(200).json(data);
       }
     });
   } catch (err) {
@@ -142,10 +140,10 @@ let putOneItem = (req, res) => {
     docClient.update(params1, (err, data) => {
       if (err) {
         console.log(err);
-        return res.json("Item can not be Updated").status(400);
+        return res.status(400).json("Item can not be Updated");
       } else {
         console.log("Item has been Updated");
-        return res.json(data).status(200);
+        return res.status(200).json(data);
       }
     });
   } catch (err) {
@@ -161,10 +159,10 @@ const deleteItemById = (req, res) => {
   docClient.delete(params1, (err, data) => {
     if (err) {
       console.log(err);
-      return res.json("Item 1can not be deleted",err).status(400);
+      return res.status(400).json("Item 1can not be deleted", err);
     } else {
       console.log("Item1 has been deleted");
-      return res.json("Item 1has been deleted").status(200);
+      return res.status(200).json("Item 1has been deleted");
     }
   });
 };
@@ -185,10 +183,10 @@ let deleteOneItem = (req, res) => {
     docClient.update(params1, (err, data) => {
       if (err) {
         console.log(err);
-        return res.json("Item can not be deleted", err).status(400);
+        return res.status(400).json("Item can not be deleted", err);
       } else {
         console.log("Item has been deleted");
-        return res.json(data).status(200);
+        return res.status(200).json(data);
       }
     });
   } catch (err) {

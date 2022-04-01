@@ -14,13 +14,13 @@ let getAllCategories = (req, res) => {
     };
     docClient.scan(params, (err, categories) => {
       if (err) {
-        return res.json(err).status(404);
+        return res.status(400).json(err);
       } else {
-        return res.json(categories.Items).status(200);
+        return res.status(200).json(categories.Items);
       }
     });
   } catch (err) {
-    res.json(err).status(404);
+    res.status(400).json(err);
   }
 };
 
@@ -36,17 +36,17 @@ let getOneCategory = (req, res) => {
       if (Object.keys(category).length === 0) {
         res
           .json({ message: "Table does not have data with that ID " + err })
-          .status(404);
+          .status(400);
         return;
       } else if (err) {
-        res.json(err).status(404);
+        res.status(400).json(err);
         return;
       } else {
-        return res.json(category.Item).status(200);
+        return res.status(200).json(category.Item);
       }
     });
   } catch (err) {
-    return res.json(err).status(404);
+    return res.status(400).json(err);
   }
 };
 
@@ -69,7 +69,7 @@ let updateOneCategory = (req, res) => {
     docClient.update(params, (err, data) => {
       if (err) {
         console.log(err);
-        return res.json("category can not be Updated", err).status(400);
+        return res.status(400).json("category can not be Updated", err);
       } else {
         console.log("category has been Updated");
         return res.json(data).status(200);
@@ -94,10 +94,10 @@ let createOneCategory = (req, res) => {
     new AWS.DynamoDB().putItem(params, (err, data) => {
       if (err) {
         console.log(err);
-        return res.json(err).status(400);
+        return res.status(40).json(err);
       } else {
         console.log("category has been added");
-        return res.json(data).status(200);
+        return res.status(200).json(data);
       }
     });
   } catch (err) {
@@ -126,7 +126,7 @@ let deleteCategory = (req, res) => {
     docClient.scan(paramItem, (err, items) => {
       if (err) {
         console.log(err);
-        return res.json("Item not found", err).status(404);
+        return res.status(400).json("Item not found", err);
       } else {
         // console.log(items.Items);
         var itemList = items.Items;
@@ -136,17 +136,17 @@ let deleteCategory = (req, res) => {
         });
         if (cId.indexOf(req.params.categoryid) !== -1) {
           return res
+            .status(200)
             .json(
               "Category can not be deleted , It has reference to other table"
-            )
-            .status(200);
+            );
         } else {
           docClient.update(params, (err, data) => {
             if (err) {
               console.log(err);
-              return res.json("category can not be deleted", err).status(400);
+              return res.status(400).json("category can not be deleted", err);
             } else {
-              return res.json(data).status(200);
+              return res.status(200).json(data);
             }
           });
         }
@@ -156,8 +156,6 @@ let deleteCategory = (req, res) => {
     console.log(err);
   }
 };
-
-
 
 module.exports = {
   getAllCategories,
