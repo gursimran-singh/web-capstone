@@ -9,21 +9,18 @@ AWS.config.update({
 var credentials = new AWS.SharedIniFileCredentials({ profile: "capstone" });
 AWS.config.credentials = credentials;
 
-// require('./models/item');
-var apiRouter = require("./routes/indexRouteAPI");
-var categoriesRouter = require("./routes/categoryRouteAPI");
-
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/api/food", apiRouter);
-app.use("/api/category", categoriesRouter);
-app.use("/api/user", require('./routes/userRoutes'));
+app.use("/api/food", require("./routes/indexRouteAPI"));
+app.use("/api/category", require("./routes/categoryRouteAPI"));
+app.use("/api/user", require("./routes/userRoutes"));
 app.use("/api/image", require('./routes/imageRoutes'));
-
+app.use("/api/payment", require("./routes/paymentRouteAPI"));
+app.use("/api/order", require("./routes/orderRouteAPI"));
 
 
 module.exports = app;
