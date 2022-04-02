@@ -53,6 +53,9 @@ export const cartSlice = createSlice({
             }
             currentDish.quantity = quantity;
         },
+        resetCart: (state, action)=>{
+            state.dishList=[];
+        },
     },
 });
 
@@ -62,6 +65,7 @@ export const {
     dishChange,
     dishAdd,
     dishRemove,
+    resetCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -37,7 +37,7 @@ export default function Contactus() {
   });
 
   const submitHandler = (submitVal, {resetForm}) => {
-    console.log(submitVal);
+    // console.log(submitVal);
     // alert("Thank you very much for contacting us. We will reply to your email as soon as possible.")
     resetForm(initialValues);
     setIsSent(true);

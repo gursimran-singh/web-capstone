@@ -15,7 +15,7 @@ import store from "./components/store"
 import Checkout from "./components/Checkout"
 import Emailsent from './components/Emailsent';
 import { Provider } from "react-redux"
-
+import Payment  from "./components/Payment"
 
 ReactDOM.render(
   // <React.StrictMode>
@@ -36,6 +36,7 @@ ReactDOM.render(
           <Route path="cart" element={<Cart />}></Route>
           <Route path="checkout" element={<Checkout />}></Route>
           <Route path="emailsent" element={<Emailsent />}></Route>
+          <Route path="payment" element={<Payment />}></Route>
           <Route path='*' element={
             <main style={{ padding: "1rem", fontSize: "1.25rem", minHeight:"80vh",}}>
               <p className="main">Page Not Found.</p>
