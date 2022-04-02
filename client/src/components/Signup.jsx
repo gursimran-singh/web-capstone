@@ -8,7 +8,7 @@ import { clearMessage } from "./slices/messageSlice";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "./contactus.css";
-import { Navigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Signup() {
   const [successful, setSuccessful] = useState(false);

@@ -64,6 +64,7 @@ function Banner(){
                             list.map( (item)=>{
                                 return (
                                     <div className="col-md-3" key = {item.id}>
+                                    <Link to={"/food/" + item.id}>
                                     <div className="card">
                                         <img src={'images/' + item.image} className="card-img-top" alt="..."/>
                                         <div className="card-body text-center">
@@ -71,6 +72,7 @@ function Banner(){
                                             <p className=" main">{"$" + item.price }</p>    
                                         </div>
                                     </div>
+                                    </Link>
                                 </div>
                                 )
                             })
