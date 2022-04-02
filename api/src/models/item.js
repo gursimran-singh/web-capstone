@@ -36,7 +36,10 @@ var itemSchema = new dynamoose.Schema({
   },
 });
 
-module.exports = dynamoose.model("item", itemSchema);
+const Item = dynamoose.model("item", itemSchema, {
+  create: false,
+  waitForActive: false
+});
 
 function addItems(
   id,
