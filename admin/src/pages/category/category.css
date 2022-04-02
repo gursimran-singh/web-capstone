@@ -88,4 +88,7 @@
     font-weight: 600;
     cursor: pointer;
   }
-  
+  img{
+    max-width: 53%;
+
+  }
