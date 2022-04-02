@@ -1,17 +1,28 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import React, { useState } from "react";
+
+import { useSelector , useDispatch } from "react-redux";
+import { resetCart } from "./slices/cartSlice";
+import { Formik, Field, Form, ErrorMessage } from "formik"
 import * as Yup from "yup";
+// import { useEffect } from "react";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "./contactus.css";
 import { Navigate, Link} from "react-router-dom";
+import axios from "axios";
 
+const ORDER_URL = "https://6fdhemeqha.execute-api.ca-central-1.amazonaws.com/dev/api/order/";
+let order_id;
+let total_price;
 export default function Checkout() {
   const dishList = useSelector((state) => state.cart.dishList);
   const loggedIn = useSelector((state)=>state.auth.loggedIn);
+  const dispatch = useDispatch();
+  const [submitOrder, setSubmitOrder] = useState(false);
   // const [paymentSec, setPaymentSec] = useState(false);
 
+
+  
   const initialValues = {
     address: "",
     city: "",
@@ -49,30 +60,62 @@ export default function Checkout() {
 
   let totalAmount = Math.round((shippingFee + subTotal(dishList))*100/100);
 
+
+
   const placeOrder = (submitVal) => {
 
     const storedUser = JSON.parse(sessionStorage.getItem("user"));
     let order_date = new Date()
-    
+    // console.log(JSON.stringify(dishList));
     // console.log(submitVal);
     // console.log(storedUser);
-    let order={};
-    order.dish_list = dishList;
-    order.user_id = storedUser.user.id;
-    order.order_date = order_date.toLocaleString();
-    order.address = submitVal.address+ ", " + submitVal.city + ", " + submitVal.state + " " + submitVal.postcode;
-    order.customer_name = submitVal.firstname + " " + submitVal.lastname;
-    order.phone = submitVal.phone;
-    order.payment= false;
-    order.total_amount = totalAmount;
-    console.log(order);
+    // let order={};
+    // const dish_list = JSON.stringify(dishList);
+    let dish_list = JSON.stringify(dishList);
+    // console.log(order.dish_list);
+   let  user_id = storedUser.user.id;
+    order_date = order_date.toLocaleString();
+   let address = submitVal.address+ ", " + submitVal.city + ", " + submitVal.state + " " + submitVal.postcode;
+   let customer_name = submitVal.firstname + " " + submitVal.lastname;
+   let phone = submitVal.phone;
+   let payment_status= "false";
+   total_price = totalAmount.toString();
+   let delivery_date = order_date.toLocaleString();
+  //  let id="ddd";
+    // console.log(order);
+   
+    axios.post(ORDER_URL, {
+      dish_list,
+      order_date,
+      address,
+      customer_name,
+      phone,
+      user_id,
+      payment_status,
+      total_price,
+      delivery_date,
+    })
+    .then((res) =>{
+      // console.log(res);
+      order_id = res.data.order.id;
+      // console.log(order_id);
+      dispatch(resetCart());
+      setSubmitOrder(true);
+    }).catch((error)=>{
+      console.log(error);
+    });
+
+    
   };
 
- 
+ if(submitOrder && order_id && total_price){
+   
+  return <Navigate to="/payment" state={{order_id: order_id, total_price: total_price}}/>;
+ }
   if(!loggedIn){
     return <Navigate to="/login" />;
   }
-  if (dishList.length === 0) {
+  if (dishList.length === 0 && !submitOrder) {
     return (
       <div className="checkout">
       <div className="alcontent">

@@ -461,3 +461,51 @@ margin-top: 0.3125rem;
   min-height: 80vh;
 
 }
+
+.payment-wrap{
+  width: 100%;
+  min-height: 80vh;
+  padding: 3.75rem 0;
+  background-color: #00000008;
+}
+.payment{
+  width: 90vw;
+  max-width: 500px;
+  box-shadow: 0 0 10px rgba(29, 29, 29, 0.3);
+  padding: 1.25rem;
+  margin:  0 auto;
+
+}
+
+.payment .date-wrap{
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.payment .date-wrap .exp-month{
+  margin: 0 0.625rem;
+}
+
+#payment-btn{
+  margin-top: 1rem;
+  width: 100%;
+  font-size: 1.25rem;
+  background-color: #913838;
+  color: #eee;
+}
+
+#payment-btn:hover{
+  background-color: transparent;
+  color: #913838;
+}
+
+.disclaimer{
+  padding: 1rem;
+  font-weight: bold;
+  margin: 2rem auto;
+  max-width: 1366px;
+  border: 1px solid red;
+  color: red;
+  text-align: justify;
+}
