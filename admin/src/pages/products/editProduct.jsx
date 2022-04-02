@@ -2,6 +2,8 @@ import React, { useState, useEffect, Component } from "react";
 import baseURL from "../../requestMethods.js";
 import { Link, useLocation } from "react-router-dom";
 import "./product.css";
+import UploadImage from '../../Components/uploadImage/uploadImage';
+
 
 const Product = props => {
     const initialProdState = {
@@ -36,6 +38,10 @@ const Product = props => {
         setcurrentProduct({ ...currentProduct, [name]: value });
     };
 
+    const updateField = (field, value) => {
+        setcurrentProduct({ ...currentProduct, ["image"]: value });
+    };
+
 
     const updateProduct = () => {
         if (handleValidation()) {
@@ -59,14 +65,22 @@ const Product = props => {
             formIsValid = false;
             seterrorMsg({ ["name"]: "Cannot be empty" });
         }
-
+        if (!fields["category_id"]) {
+            formIsValid = false;
+            seterrorMsg({ ["category_id"]: "Please select category" });
+          }
+          if (!fields["image"]) {
+            formIsValid = false;
+            seterrorMsg({ ["image"]: "Please select image" });
+          }
         if (!fields["price"]) {
             formIsValid = false;
             seterrorMsg({ ["price"]: "Cannot be empty" });
         } else {
 
             if (typeof fields["price"] !== "undefined") {
-                if (!fields["price"].match(/^[0-9]+$/)) {
+                let _price = fields["price"].toString();
+                if (!_price.match(/^[0-9]+$/)) {
                     formIsValid = false;
                     seterrorMsg({ ["price"]: "Price can be numeric only" });
                 }
@@ -96,11 +110,12 @@ const Product = props => {
         <div className="newProduct" >
             <h1 className="addProductTitle">Update Product Information</h1>
             <form className="addProductForm">
-                <div className="addProductItem">
+                {/* <div className="addProductItem">
                     <label>Image</label>
                     <input type="text" name="image" placeholder="Image" onChange={handleInputChange}
                         value={currentProduct.image} />
-                </div>
+                </div> */}
+               
                 <div className="addProductItem">
                     <label>Name</label>
                     <input type="text" placeholder="Name" name="name" onChange={handleInputChange}
@@ -142,6 +157,13 @@ const Product = props => {
                     <input type="textarea" row="2" onChange={handleInputChange}
                         value={currentProduct.description} name="description" />
                     <span style={{ color: "red" }}>{errorMsg.description}</span>
+
+                </div>
+                <div className="addProductItem">
+                    <label>Change Image</label>
+                    <UploadImage section="item" updateField={updateField.bind(this)} />
+                    <span style={{ color: "red" }}>{errorMsg.image}</span>
+                    <img alt="Item pic" src={currentProduct.image} />
 
                 </div>
             </form>
