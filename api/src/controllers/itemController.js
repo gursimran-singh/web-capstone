@@ -1,5 +1,5 @@
 var AWS = require("aws-sdk");
-const { NULL } = require("dynamoose");
+const item = require("../models/item");
 var docClient = new AWS.DynamoDB.DocumentClient();
 const Ulid = require("ulid");
 
@@ -194,6 +194,48 @@ let deleteOneItem = (req, res) => {
   }
 };
 
+const searchItems = (req, res) => {
+  let params = {
+    TableName : "item",
+  }
+
+  let que = req.query;
+  let expression = 'flag=:f'; 
+  let value = {
+    ":f": "Active"
+  };
+  
+  if(que.s && que.s != ''){
+    expression += ' AND contains(#itemName, :s)';
+    value[':s'] = que.s;
+    params['ExpressionAttributeNames'] = {
+      "#itemName": "name",
+    }
+  }
+
+  if(que.cat){
+    cat = que.cat.split(',');
+    expression += ' AND category_id IN (';
+    cat.forEach((v, i) => {
+      expression += ':cat' + i + ',';
+      value[':cat' + i] = v;
+    });
+    expression = expression.slice(0, -1);
+    expression += ')';
+  }
+
+  params['FilterExpression'] = expression;
+  params['ExpressionAttributeValues'] = value;
+  
+  docClient.scan(params, function(err, data) {
+    if (err) {
+      res.status(400).json({error: err});
+    } else {
+      res.status(200).json(data);
+    }
+  });
+}
+
 module.exports = {
   getAllItems,
   getOneItem,
@@ -201,4 +243,5 @@ module.exports = {
   putOneItem,
   deleteOneItem,
   deleteItemById,
+  searchItems
 };

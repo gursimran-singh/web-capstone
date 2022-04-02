@@ -5,6 +5,9 @@ const itemCtrl = require("../controllers/itemController");
 router.route("/")
     .get(itemCtrl.getAllItems)
     .post(itemCtrl.postOneItem);
+    
+router.route("/search")
+    .get(itemCtrl.searchItems)
 
 router.route("/:foodid")
     .get(itemCtrl.getOneItem)
@@ -13,6 +16,8 @@ router.route("/:foodid")
 
 router.route("/delete/:foodid")
     .put(itemCtrl.deleteOneItem);
+
+
 
 
 module.exports = router;
