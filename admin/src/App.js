@@ -11,9 +11,16 @@ import Category from "./pages/category/list";
 import NewCategory from "./pages/category/newCategory";
 import EditProduct from "./pages/products/editProduct";
 import EditCategory from "./pages/category/editCategory";
-
+import Login from "./pages/login/Login";
+import useToken from './slices/useToken';
 
 function App() {
+const { token, setToken } = useToken();
+
+  if (!token) {
+    return <Login setToken={setToken} />
+  }
+
   return (
     <Router>
       <Topbar />
