@@ -32,6 +32,18 @@ function ProfileData() {
         fetchData();
     }, []);
 
+    const [userOrders, setOrder] = useState([]); 
+    useEffect(() => {
+        const fetchData2 = async() => {
+            
+          const result2 = await axios.get(
+            'https://6fdhemeqha.execute-api.ca-central-1.amazonaws.com/dev/api/order/user',config
+            );
+          setOrder(result2.data.Items)
+         };
+         fetchData2();
+      }, []);
+
     const handleUpdateUser1 = event => {
         const { name, value } = event.target;
         setDetails({ ...userDetails, [name]: value });
@@ -82,8 +94,9 @@ function ProfileData() {
             formIsValid = false;
             errors["name"] = "Cannot be empty";
         }
-
-        if (fields["password"]) {
+        
+        console.log(fields["password"]);
+        if (fields["password"].length > 0) {
             if (!fields["cfm_password"]) {
                 formIsValid = false;
                 errors["cfm_password"] = "Cannot be empty";
@@ -171,33 +184,34 @@ function ProfileData() {
                     <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         <div className="table-responsive">
                             <table style={{ minHeight: "350px" }} className="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">First</th>
-                                        <th scope="col">Last</th>
-                                        <th scope="col">Handle</th>
+                            <thead>
+                        <tr>
+                        <th scope="col">Order No</th>
+                        <th scope="col">Dishes</th>
+                        <th scope="col">Total Amount</th>
+                        <th scope="col">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        { 
+                            userOrders.map((orderItems) => {
+                               let dish_name = JSON.parse(orderItems.dish_list);
+                                return (
+                                    <tr key = {orderItems.id}>
+                                    <th scope="row">{orderItems.id}</th>
+                                    <td>{dish_name.map((dish,i) => {
+                                        return(
+                                            <li key = {i++}>{dish.item_name} - {dish.quantity}</li>
+                                        )
+                                    })}</td>
+                                    <td>$ {orderItems.total_price}</td>
+                                    <td>{orderItems.order_date}</td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colSpan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                </tbody>
+                                )
+                            })
+                        }
+                        
+                    </tbody>
                             </table>
                         </div>
 

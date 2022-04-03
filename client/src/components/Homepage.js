@@ -4,7 +4,7 @@ import 'bootstrap/js/dist/carousel';
 import './main.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, Outlet } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function Banner(){
     return (
@@ -16,7 +16,7 @@ function Banner(){
               <div className="banner-text">
                     <h1>Cuisine De Palace</h1>
                     <p>Get home cooked meal at your door step. Just one click away!!</p>     
-                    <Link to="/contactus" className="btn btn-red">Contact Now</Link>
+                    <Link to="/menu" className="btn btn-red">Order Now</Link>
                 </div>
             </div>
 
@@ -57,7 +57,7 @@ function Banner(){
         <div className="container-fluid mb-5">
                 <div className="container mb-1">
                     <div className="text-center pb-5 mt-5">
-                        <h2 className="underline">Latest Product</h2>   
+                        <h2 className="">Latest Product</h2>   
                     </div>
                     <div className="row">
                         {
@@ -66,7 +66,7 @@ function Banner(){
                                     <div className="col-md-3" key = {item.id}>
                                     <Link to={"/food/" + item.id}>
                                     <div className="card">
-                                        <img src={'images/' + item.image} className="card-img-top" alt="..."/>
+                                        <img src={item.image} className="card-img-top" alt="..."/>
                                         <div className="card-body text-center">
                                             <h5 className="card-title">{item.name} </h5>
                                             <p className=" main">{"$" + item.price }</p>    
@@ -110,7 +110,7 @@ function Banner(){
       return(
         <div className="container-fluid bg-main2 pt-5 pb-3" style={{padding: 0}}>
         <div className="text-center pb-5">
-                <h2 className="underline">Top Categories</h2>   
+                <h2 className="">Top Categories</h2>   
         </div>
         <div className="card-group pb-5">
 
