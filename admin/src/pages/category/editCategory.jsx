@@ -1,8 +1,9 @@
 import React, { useState, useEffect, Component } from "react";
-import baseURL from "../../requestMethods.js";
+import baseURL from "../../authRequest.js";
 import { Link, useLocation } from "react-router-dom";
-import "./category.css";
+import "../../assets/css/style.css";
 import UploadImage from '../../Components/uploadImage/uploadImage';
+import { Navigate } from "react-router-dom";
 
 const Product = props => {
     const initialProdState = {
@@ -12,11 +13,11 @@ const Product = props => {
     const [currentProduct, setcurrentProduct] = useState(initialProdState);
     const [message, setMessage] = useState("");
     const [errorMsg, seterrorMsg] = useState("");
-
+    const [goBack, setGoBack] = useState("");
     const location = useLocation();
-    const prodId = location.pathname.split("/")[2];
+    const catId = location.pathname.split("/")[2];
 
-    const getTutorial = id => {
+    const getCategory = id => {
         baseURL.get('/category/' + id)
             .then(response => {
                 setcurrentProduct(response.data);
@@ -27,8 +28,8 @@ const Product = props => {
     };
 
     useEffect(() => {
-        getTutorial(prodId);
-    }, [prodId]);
+        getCategory(catId);
+    }, [catId]);
 
     const handleInputChange = event => {
         const { name, value } = event.target;
@@ -51,7 +52,9 @@ const Product = props => {
                 });
         }
     };
-
+    const clickGoBack = () => {
+        setGoBack("goback");
+    };
     const handleValidation = () => {
         let fields = currentProduct;
         let formIsValid = true;
@@ -69,10 +72,21 @@ const Product = props => {
 
         return formIsValid;
     };
-
+    if (goBack == "goback") {
+        return <Navigate to="/categories" />;
+    }
     return (
         <div className="newProduct" >
             <h1 className="addProductTitle">Update Category Information</h1>
+            {
+                message && (
+                    <div className="form-group">
+                        <div className="alert alert-danger">
+                            {message}
+                        </div>
+                    </div>
+                )
+            }
             <form className="addProductForm">
                 <div className="addProductItem">
                     <label>Change Image</label>
@@ -91,20 +105,18 @@ const Product = props => {
             </form>
             <button
                 type="submit"
-                className="addProductButton"
-                onClick={updateProduct}
-            >
+                className=" btn btnSuccess"
+                onClick={updateProduct}>
                 Update
             </button>
-            {
-                message && (
-                    <div className="form-group">
-                        <div className="alert alert-danger">
-                            {message}
-                        </div>
-                    </div>
-                )
-            }
+
+            <button
+                type="button"
+                className="btn btnBack"
+                onClick={clickGoBack}>
+                Back
+            </button>
+           
         </div>
     );
 };

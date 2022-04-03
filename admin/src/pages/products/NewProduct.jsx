@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import "./product.css";
-import baseURL from "../../requestMethods.js";
+import "../../assets/css/style.css";
+import baseURL from "../../authRequest.js";
 import { Navigate } from "react-router-dom";
-import logo from  "../../assets/images/default-image.jpg";
+import logo from "../../assets/images/default-image.jpg";
 import UploadImage from '../../Components/uploadImage/uploadImage';
 
 class Form extends Component {
@@ -16,6 +16,7 @@ class Form extends Component {
       redirect: null,
     };
 
+    // default image
     let fields = this.state.fields;
     fields["image"] = logo;
     this.setState({ fields });
@@ -63,7 +64,7 @@ class Form extends Component {
     return formIsValid;
   }
 
-  contactSubmit(e) {
+  formSubmit(e) {
     e.preventDefault();
 
     if (this.handleValidation()) {
@@ -79,7 +80,7 @@ class Form extends Component {
     }
   }
 
-  updateField(field, value){
+  updateField(field, value) {
     let fields = this.state.fields;
     fields[field] = value;
     this.setState({ fields });
@@ -89,6 +90,11 @@ class Form extends Component {
     let fields = this.state.fields;
     fields[field] = e.target.value;
     this.setState({ fields });
+  }
+
+  clickGoBack(e) {
+    e.preventDefault();
+    this.setState({ redirect: "/products" });
   }
 
   componentDidMount() {
@@ -110,7 +116,7 @@ class Form extends Component {
     return (
       <div className="newProduct" >
         <h1 className="addProductTitle">New Product</h1>
-        <form className="addProductForm" onSubmit={this.contactSubmit.bind(this)}>
+        <form className="addProductForm" onSubmit={this.formSubmit.bind(this)}>
           <div className="addProductItem">
             <label>Name</label>
             <input type="text" placeholder="Name" onChange={this.handleChange.bind(this, "name")}
@@ -162,11 +168,19 @@ class Form extends Component {
             <img alt="Item pic" src={this.state.fields['image']} />
 
           </div>
-          <button className="addProductButton" type="submit">Create</button>
+          <button className="btn btnSuccess" type="submit">Create</button>
+
+          <button
+            type="button"
+            className="btn btnBack"
+            onClick={this.clickGoBack.bind(this)}>
+            Back
+          </button>
+
         </form>
       </div>
 
-      
+
     )
   }
 }
