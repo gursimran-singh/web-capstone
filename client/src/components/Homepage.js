@@ -93,45 +93,52 @@ function Banner(){
   }
 
   function Categories() {
+    const [cat,setCat] = useState([]);
+
+    useEffect(() => {
+      const fetchData1 = async() => {
+        const result1 = await axios(
+          'https://6fdhemeqha.execute-api.ca-central-1.amazonaws.com/dev/api/category',
+        );
+        const topCat = result1.data.splice(-4);
+        setCat(topCat)
+      };
+      fetchData1();
+    }, []);
+  
+
       return(
         <div className="container-fluid bg-main2 pt-5 pb-3" style={{padding: 0}}>
         <div className="text-center pb-5">
-                <h2 className="underline">Explore Category</h2>   
+                <h2 className="underline">Top Categories</h2>   
         </div>
         <div className="card-group pb-5">
-          <div className="card hover-img">
-            <img src="images/lasagna.png" className="card-img-top img-ver2" alt="..."/>
-            <div className="hover-text">
-                <div className="text">
-                    <p>Paneer Shaslik Sizzler</p>
+
+        {
+          cat.map((itemCat) => {
+            return(
+              <div className="card hover-img" key={itemCat.id}>
+                <img src={itemCat.image} className="card-img-top img-ver2" alt={itemCat.name}/>
+                <div className="hover-text">
+                    <div className="text">
+                        <p>{itemCat.name}</p>
+                    </div>
                 </div>
-            </div>
-          </div>
-          <div className="card hover-img">
-            <img src="images/strawberry.png" className="card-img-top img-ver2" alt="..."/>
-            <div className="hover-text">
-                <div className="text">
-                    <p>Paneer Shaslik Sizzler</p>
-                </div>
-            </div>
-          </div>
-          <div className="card hover-img">
-            <img src="images/sizzler.png" className="card-img-top img-ver2" alt="..."/>
-            <div className="hover-text">
-                <div className="text">
-                    <p>Paneer Shaslik Sizzler</p>
-                </div>
-            </div>
-          </div>
-          <div className="card hover-img">
-            <img src="images/lasagna.png" className="card-img-top img-ver2" alt="..."/>
-            <div className="hover-text">
-                <div className="text">
-                    <p>Paneer Shaslik Sizzler</p>
-                </div>
-            </div>
-          </div>
+              </div>
+            )}
+            )
+        }
         </div>
+
+        <div className="text-center ">
+                        <Link to='/menu' className="main lead">Go to Menu
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
+                              <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                            </svg>
+                        </Link>    
+                        
+        </div>
+
     </div>
       )
   }

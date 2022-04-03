@@ -10,6 +10,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Contactus from './components/Contactus';
 import Menu from './components/Menu';
 import Food from './components/Food';
+import Profile from './components/Profile';
 import Cart from "./components/Cart";
 import store from "./components/store"
 import Checkout from "./components/Checkout"
@@ -31,6 +32,7 @@ ReactDOM.render(
           <Route path="menu" element={<Menu />}></Route>
           <Route path="food/:id" element={<Food/>}></Route>
           <Route path="contactus" element={<Contactus />}></Route>
+          <Route path="profile" element={<Profile />}></Route>
           <Route path="login" element={<Login />}></Route>
           <Route path="signup" element={<Signup />}></Route>
           <Route path="cart" element={<Cart />}></Route>
