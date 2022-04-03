@@ -1,9 +1,9 @@
-import "./product.css";
+import "../../assets/css/style.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import baseURL from "../../requestMethods.js";
+import baseURL from "../../authRequest.js";
 
 export default function ProductList() {
   const [data, setData] = useState();

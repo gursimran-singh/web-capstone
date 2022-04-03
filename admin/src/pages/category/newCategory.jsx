@@ -1,6 +1,6 @@
-import "./category.css";
+import "../../assets/css/style.css";
 import React, { Component } from 'react';
-import baseURL from "../../requestMethods.js";
+import baseURL from "../../authRequest.js";
 import { Navigate } from "react-router-dom";
 import logo from  "../../assets/images/default-image.jpg";
 import UploadImage from '../../Components/uploadImage/uploadImage';
@@ -15,7 +15,7 @@ class CategoryForm extends Component {
       data: [],
       redirect: null,
     };
-
+// default image
     let fields = this.state.fields;
     fields["image"] = logo;
     this.setState({ fields });
@@ -40,7 +40,7 @@ class CategoryForm extends Component {
     return formIsValid;
   }
 
-  contactSubmit(e) {
+  formSubmit(e) {
     e.preventDefault();
 
 
@@ -67,6 +67,12 @@ class CategoryForm extends Component {
     fields[field] = value;
     this.setState({ fields });
   }
+
+  clickGoBack(e) {
+    e.preventDefault();
+    this.setState({ redirect: "/categories" });
+  }
+
   render() {
     if (this.state.redirect) {
       return <Navigate to={this.state.redirect} />
@@ -74,7 +80,7 @@ class CategoryForm extends Component {
     return (
       <div className="newProduct" >
         <h1 className="addProductTitle">New Category</h1>
-        <form className="addProductForm" onSubmit={this.contactSubmit.bind(this)}>
+        <form className="addProductForm" onSubmit={this.formSubmit.bind(this)}>
         <div className="addProductItem">
             <label>Image</label>
             <UploadImage section="category" updateField={this.updateField.bind(this)} />
@@ -88,7 +94,14 @@ class CategoryForm extends Component {
             <span style={{ color: "red" }}>{this.state.errors["name"]}</span>
 
           </div>
-          <button className="addProductButton" type="submit">Create</button>
+       <button className="btn btnSuccess" type="submit">Create</button>
+
+          <button
+            type="button"
+            className="btn btnBack"
+            onClick={this.clickGoBack.bind(this)}>
+            Back
+          </button>
         </form>
       </div>
 

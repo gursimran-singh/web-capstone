@@ -1,9 +1,9 @@
 import React, { useState, useEffect, Component } from "react";
-import baseURL from "../../requestMethods.js";
+import baseURL from "../../authRequest.js";
 import { Link, useLocation } from "react-router-dom";
-import "./product.css";
+import "../../assets/css/style.css";
 import UploadImage from '../../Components/uploadImage/uploadImage';
-
+import { Navigate } from "react-router-dom";
 
 const Product = props => {
     const initialProdState = {
@@ -12,13 +12,14 @@ const Product = props => {
 
     const [currentProduct, setcurrentProduct] = useState(initialProdState);
     const [message, setMessage] = useState("");
+    const [goBack, setGoBack] = useState("");
     const [errorMsg, seterrorMsg] = useState("");
     const [objCategory, setCategory] = useState([]);
 
     const location = useLocation();
     const prodId = location.pathname.split("/")[2];
 
-    const getTutorial = id => {
+    const getProduct = id => {
         baseURL.get('/food/' + id)
             .then(response => {
                 getCategories();
@@ -30,7 +31,7 @@ const Product = props => {
     };
 
     useEffect(() => {
-        getTutorial(prodId);
+        getProduct(prodId);
     }, [prodId]);
 
     const handleInputChange = event => {
@@ -42,13 +43,17 @@ const Product = props => {
         setcurrentProduct({ ...currentProduct, ["image"]: value });
     };
 
+    const clickGoBack = () => {
+        setGoBack("goback");
+    };
+
 
     const updateProduct = () => {
         if (handleValidation()) {
             baseURL.put("/food/" + currentProduct.id, currentProduct)
                 .then(response => {
                     console.log(response.data);
-                    setMessage("The Product was updated successfully!");
+                    setMessage("The Product updated successfully!");
                 })
                 .catch(e => {
                     console.log(e);
@@ -68,11 +73,11 @@ const Product = props => {
         if (!fields["category_id"]) {
             formIsValid = false;
             seterrorMsg({ ["category_id"]: "Please select category" });
-          }
-          if (!fields["image"]) {
+        }
+        if (!fields["image"]) {
             formIsValid = false;
             seterrorMsg({ ["image"]: "Please select image" });
-          }
+        }
         if (!fields["price"]) {
             formIsValid = false;
             seterrorMsg({ ["price"]: "Cannot be empty" });
@@ -105,17 +110,22 @@ const Product = props => {
             })
             .catch(error => console.log(error.response));
     };
-
+    if (goBack == "goback") {
+        return <Navigate to="/products" />;
+    }
     return (
         <div className="newProduct" >
             <h1 className="addProductTitle">Update Product Information</h1>
+            {
+                message && (
+                    <div className="form-group">
+                        <div className="alert alert-danger">
+                            {message}
+                        </div>
+                    </div>
+                )
+            }
             <form className="addProductForm">
-                {/* <div className="addProductItem">
-                    <label>Image</label>
-                    <input type="text" name="image" placeholder="Image" onChange={handleInputChange}
-                        value={currentProduct.image} />
-                </div> */}
-               
                 <div className="addProductItem">
                     <label>Name</label>
                     <input type="text" placeholder="Name" name="name" onChange={handleInputChange}
@@ -167,25 +177,20 @@ const Product = props => {
 
                 </div>
             </form>
-
-
-
             <button
                 type="submit"
-                className="addProductButton"
-                onClick={updateProduct}
-            >
+                className=" btn btnSuccess"
+                onClick={updateProduct}>
                 Update
             </button>
-            {
-                message && (
-                    <div className="form-group">
-                        <div className="alert alert-danger">
-                            {message}
-                        </div>
-                    </div>
-                )
-            }
+
+            <button
+                type="button"
+                className="btn btnBack"
+                onClick={clickGoBack}>
+                Back
+            </button>
+
         </div>
     );
 };
