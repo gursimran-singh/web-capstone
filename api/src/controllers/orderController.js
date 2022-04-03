@@ -13,6 +13,23 @@ const createOrder = (req, res) => {
     });
 };
 
+const getAllOrders = (req, res) => {
+  try {
+    const params = {
+      TableName: "order",
+    };
+    docClient.scan(params, (err, orders) => {
+      if (err) {
+        return res.status(400).json(err);
+      } else {
+        return res.status(200).json(orders);
+      }
+    });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
+
 let putOrder = (req, res) => {
   try {
     var params1 = {
@@ -43,4 +60,5 @@ let putOrder = (req, res) => {
 module.exports = {
   createOrder,
   putOrder,
+  getAllOrders,
 };

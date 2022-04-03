@@ -60,4 +60,8 @@ function createOrder(data) {
   return newOrder.save();
 }
 
-module.exports = { createOrder };
+function getAllOrders() {
+  return Order.scan().exec();
+}
+
+module.exports = { createOrder, getAllOrders };
