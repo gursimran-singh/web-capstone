@@ -39,12 +39,12 @@ export default function Payment() {
       .matches(/^([\d]{2})$/gm, "Expired year should have 2 digits")
       .test(
         "year",
-        "The expiration year should be in this year or year later",
-        (val) => parseInt(val) >= currentYear
+        "The expiration year should be in range from current year (22) to 35.",
+        (val) => parseInt(val) >= currentYear && parseInt(val) <=35
       ),
     expMonth: Yup.string()
       .required("An expiration month is required!")
-      .matches(/^(0[1-9]|1[0-2])$/gm, "Expired year should be Jan to Dec")
+      .matches(/^(0[1-9]|1[0-2])$/gm, "Expired month should be Jan to Dec in two digits.")
       .when("expYear", (expYear) => {
         if (parseInt(expYear) === currentYear) {
           return Yup.string()
@@ -73,7 +73,7 @@ export default function Payment() {
       axios
         .post(PAY_URL, { cardNumber, expMonth, expYear, cvc, amount })
         .then((res) => {
-            console.log(res.data.charges.data[0].receipt_url);
+            // console.log(res.data.charges.data[0].receipt_url);
             total_price = "";
             resetForm(initialValues);
             setAmount('');
@@ -89,6 +89,7 @@ export default function Payment() {
         })
         .catch((error) => {
           console.log(error);
+          alert("Payment failed. Please try again with correct card number and infomation.")
         });
     }
   };
@@ -108,7 +109,7 @@ export default function Payment() {
             <div>
               <div className="form-group">
                 <label htmlFor="cardNumber">Card Number</label>
-                <Field name="cardNumber" type="text" className="form-control" />
+                <Field name="cardNumber" type="text" className="form-control" placeholder = "Please use stripe test card numbers to test"/>
                 <ErrorMessage
                   name="cardNumber"
                   component="p"
