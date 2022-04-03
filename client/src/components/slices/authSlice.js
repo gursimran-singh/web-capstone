@@ -15,7 +15,6 @@ const loginAuth = (email, password) => {
         .then((response) => {
             if (response.data.hasOwnProperty("token")) {
                 sessionStorage.setItem("user", JSON.stringify(response.data));
-                
             }
             // console.log(JSON.parse(sessionStorage.getItem("user")));
             // console.log(response);

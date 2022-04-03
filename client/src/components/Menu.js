@@ -21,6 +21,7 @@ function Banner() {
 function ProductList(){
     const [list, setList] = useState([]);
 
+    
   useEffect(() => {
     const fetchData = async() => {
       const result = await axios(
@@ -33,25 +34,43 @@ function ProductList(){
     fetchData();
   }, []);
 
+  const [cat,setCat] = useState([]);
+
+  useEffect(() => {
+    const fetchData1 = async() => {
+      const result1 = await axios(
+        'https://6fdhemeqha.execute-api.ca-central-1.amazonaws.com/dev/api/category',
+      );
+    
+      setCat(result1.data)
+    };
+    fetchData1();
+  }, []);
+
   
   function searchFood(){
-    let name = document.getElementById("searchfood").value;
-    
-    // let data1 = [];
-    // const pattern = new RegExp(name.toLowerCase());
-    // console.log(pattern);
-    // list.filter((listitem) => {
-    //   console.log(listitem);
-    //   let a = pattern.test(listitem.name.toLowerCase());
-    //   console.log(a);
-    //   if(a == true){
-    //     data1.push(listitem);
-    //   }
-    // });
-    // if(name != "" && data1 != ""){
-    //   setList(data1)
-    // }
+    // s for searc , c for category filter
+    let s = document.getElementById("searchfood").value;
+    var markedCheckbox = document.querySelectorAll('input[type="checkbox"]:checked');
+    let c = [];
+    if(markedCheckbox[0] != undefined){
+      for (var checkbox of markedCheckbox) {
+        c.push(checkbox.value);
+      }
+    }
+    c = c.toString();
+    const url = "https://6fdhemeqha.execute-api.ca-central-1.amazonaws.com/dev/api/food/search?s="+ s +"&cat="+c;
+    const fetchData2 = async() => {
+      const result2 = await axios(
+        url
+      );
 
+      
+    console.log(result2.data.Items);
+    setList(result2.data.Items)
+    };
+     fetchData2();
+    
   }
 
   return (
@@ -67,38 +86,25 @@ function ProductList(){
             <div className="card mt-4" style={{boxShadow: "0px 0px 8px 0px #00000038", padding:"10px"}}>
                  <div className="card-header">Browse Categories</div>
                 <div className="body">
-                    <div className="form-check pt-1">
-                      <input className="form-check-input" name="Categories" type="checkbox" value="" id="chinese" />
-                      <label className="form-check-label" htmlFor="Chinese">Mexican 
-                      </label>
-                    </div>
-                    <div className="form-check pt-1">
-                      <input className="form-check-input" name="Categories1" type="checkbox" value="" id="Indian" />
-                      <label className="form-check-label" htmlFor="Indian">Gujarati Thali
-                      </label>
-                  </div >
-                  <div className="form-check pt-1">
-                      <input className="form-check-input" name="Categories2" type="checkbox" value="" id="Rice" />
-                      <label className="form-check-label" htmlFor="rice">Rice
-                      </label>
-                    </div>
-                    <div className="form-check pt-1">
-                      <input className="form-check-input" name="Categories2" type="checkbox" value="" id="Italian" />
-                      <label className="form-check-label" htmlFor="Italian">Curries
-                      </label>
-                    </div>
-                    <div className="form-check pt-1">
-                      <input className="form-check-input" name="Categories2" type="checkbox" value="" id="Chinese" />
-                      <label className="form-check-label" htmlFor="Chinese">Chinese
-                      </label>
-                    </div>
+                  {
+                    cat.map((catItem) => {
+                      return(
+                        <div className="form-check pt-1" key= {catItem.id}>
+                          <input className="form-check-input" onChange={searchFood} name={catItem.name} type="checkbox" value={catItem.id} id={catItem.name} />
+                          <label className="form-check-label" htmlFor={catItem.name}>{catItem.name} 
+                          </label>
+                        </div>
+                      )
+                    })
+                  }
+                    
                 </div>
             </div>
         </div>
         </div>
         <div className="col-md-9">
         <div className="row">
-                        {
+                        {list != undefined &&
                             list.map( (item)=>{
                                 return (
                                   
@@ -117,16 +123,11 @@ function ProductList(){
                                 )
                             })
                         }
+
+                        {list =="" && (
+                          <div className="main lead pt-4 text-center">No Dishes Found</div>
+                        )}
         </div>
-    <nav aria-label="Page navigation" >
-      <ul  className="text-center main pagination">
-        <li className="page-item"><a className="page-link" href="#">Previous</a></li>
-        <li className="page-item"><a className="page-link" href="#">1</a></li>
-        <li className="page-item"><a className="page-link" href="#">2</a></li>
-        <li className="page-item"><a className="page-link" href="#">3</a></li>
-        <li className="page-item"><a className="page-link" href="#">Next</a></li>
-      </ul>
-    </nav>
         </div>
     </div>
 

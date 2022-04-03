@@ -4,7 +4,7 @@ import "./App.css";
 import Home from "./pages/home/home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UserList from "./pages/users/list";
-import NewUser from "./pages/users/NewUser";
+import Order from "./pages/orders/list";
 import ProductList from "./pages/products/list";
 import NewProduct from "./pages/products/NewProduct";
 import Category from "./pages/category/list";
@@ -30,7 +30,7 @@ const { token, setToken } = useToken();
           <Route exact path="/" element={<Home />} />
 
           <Route path="/users" element={<UserList />} />
-          <Route path="/users/:userId" element={<NewUser />} />
+          <Route path="/orders" element={<Order />} />
 
           <Route path="/products" element={<ProductList />} />
           <Route path="/products/:productId" element={<EditProduct />} />

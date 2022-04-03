@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/js/dist/carousel';
-import 'bootstrap/js/src/collapse';
+import 'bootstrap/js/dist/collapse';
+import 'bootstrap/js/src/dropdown';
 import './main.css';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -51,9 +52,6 @@ function Header() {
         );
         
     }
-
-
-
     return (
         <>
             <header>
@@ -70,8 +68,14 @@ function Header() {
                                     <Link to="/homepage" className="nav-item nav-link">Home</Link>
                                     <Link to="/menu" className="nav-item nav-link">Menu</Link>
                                     <Link to="/contactus" className="nav-item nav-link">Contact</Link>
-                                    {loggedIn ? (<div>
-                                        <button onClick={logoutDialog} className="nav-item nav-link login" style={{ border: "none", backgroundColor: "transparent" }}>Logout</button>
+                                    
+                                    {loggedIn ? (
+                                    <div>
+                                        <li className="nav-item dropdown ">
+                                        <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Profile</a>
+                                        <ul className="dropdown-menu">
+                                        <li><Link className="dropdown-item" to='/profile'>{JSON.parse(sessionStorage.getItem("user")).user.name}</Link></li>
+                                        <li><button onClick={logoutDialog} className="dropdown-item " style={{ border: "none", backgroundColor: "transparent" }}>Logout</button>
                                         <Modal
                                             isOpen={cfmLogout}
                                             onAfterOpen={afterLogoutDialog}
@@ -83,13 +87,14 @@ function Header() {
                                             <button onClick={cancelLogout}>Cancel</button>
                                             <button onClick={confirmLogout} style={{marginLeft:"1rem"}}> Logout</button>
 
-                                        </Modal>
+                                        </Modal></li>
+                                      
+                                        </ul>
+                                    </li>
+                                        
                                     </div>) : <Link to="/login" className="nav-item nav-link login">Login</Link>}
                                 </div>
-                                <form className="d-flex">
-                                    <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                    <button className="btn btn-red" type="submit">Search</button>
-                                </form>
+                               
                                 {/* add link to shopping cart */}
                                 <div className="to-cart" style={{ marginLeft: "0.625rem" }}>
                                     <Link to="./cart"><FontAwesomeIcon icon={faShoppingCart} style={{ color: "#913838", fontSize: "1.25rem", }} /></Link>
