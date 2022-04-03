@@ -53,7 +53,28 @@ let putOrder = (req, res) => {
       }
     });
   } catch (err) {
-    console.log(err);
+    res.status(400).json(err);
+  }
+};
+
+let getOrdersByUserid = (req, res) => {
+  try {
+    const params = {
+      TableName: "order",
+      FilterExpression: "user_id=:ui",
+      ExpressionAttributeValues: {
+        ":ui": req.body.userid,
+      },
+    };
+    docClient.scan(params, (err, orders) => {
+      if (err) {
+        res.status(400).json("Order not found", err);
+      } else {
+        res.status(200).json(orders);
+      }
+    });
+  } catch (err) {
+    res.status(400).json(err);
   }
 };
 
@@ -61,4 +82,5 @@ module.exports = {
   createOrder,
   putOrder,
   getAllOrders,
+  getOrdersByUserid,
 };
