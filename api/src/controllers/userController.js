@@ -6,10 +6,10 @@ const getAllusers = (req, res) => {
   user
     .getAllUsers()
     .then((users) => {
-      res.json({ users: users.toJSON() }).status(200);
+      res.status(200).json({ users: users.toJSON() });
     })
     .catch((err) => {
-      res.json({ error: err }).status(404);
+      res.status(404).json({ error: err });
     });
 };
 
@@ -30,19 +30,19 @@ const doLogin = (req, res) => {
               eamil: usr[0].email,
               address: usr[0].address,
             };
-            res.json({ token: token, user: _usr }).status(200);
+            res.status(200).json({ token: token, user: _usr });
           } else {
-            res.json({ error: "Invalid credentials" }).status(404);
+            res.status(404).json({ error: "Invalid credentials" });
           }
         } else {
-          res.json({ error: "Invalid credentials" }).status(404);
+          res.status(404).json({ error: "Invalid credentials" });
         }
       })
       .catch((err) => {
-        res.json({ error: err }).status(400);
+        res.status(400).json({ error: err });
       });
   } else {
-    res.json({ error: "Both email and password is required" }).status(400);
+    res.status(400).json({ error: "Both email and password is required" });
   }
 };
 
@@ -52,13 +52,13 @@ const getLoggedInUser = (req, res) => {
       .getUser(req.decoded.id)
       .then((usr) => {
         if (usr.count != 0) {
-          res.json(usr.toJSON()).status(200);
+          res.status(200).json(usr.toJSON());
         } else {
-          res.json({ error: "Profile not found" }).status(404);
+          res.status(404).json({ error: "Profile not found" });
         }
       })
       .catch((err) => {
-        res.json({ error: err }).status(400);
+        res.status(400).json({ error: err });
       });
   }
 };
@@ -76,17 +76,17 @@ const createUser = (req, res) => {
           user
             .createUser(req.body)
             .then((user) => {
-              res.json({ user: user }).status(201);
+              res.status(201).json({ user: user });
             })
             .catch((err) => {
-              res.json({ error: err }).status(400);
+              res.status(400).json({ error: err });
             });
         } else {
-          res.json({ error: "User alredy exists" }).status(409);
+          res.status(409).json({ error: "User alredy exists" });
         }
       })
       .catch((err) => {
-        res.json({ error: err }).status(400);
+        res.status(400).json({ error: err });
       });
   }
 };
@@ -103,17 +103,17 @@ const updateUser = (req, res) => {
           user
             .updateUser(usr[0].id, req.body)
             .then((usr) => {
-              res.json({ user: usr }).status(200);
+              res.status(0).json({ user: usr });
             })
             .catch((err) => {
-              res.json({ error: err }).status(400);
+              res.status(400).json({ error: err });
             });
         } else {
-          res.json({ error: "Profile not found" }).status(404);
+          res.status(404).json({ error: "Profile not found" });
         }
       })
       .catch((err) => {
-        res.json({ error: err }).status(400);
+        res.status(400).json({ error: err });
       });
   }
 };
