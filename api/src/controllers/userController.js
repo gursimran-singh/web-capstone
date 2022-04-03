@@ -17,7 +17,7 @@ const doLogin = (req, res) => {
   if (req.body.email && req.body.password) {
     // find user by email
     user
-      .getUser(req.body.email)
+      .getUserByEmail(req.body.email)
       .then((usr) => {
         if (usr.count == 1) {
           // compare the hash password to authenticate
@@ -97,7 +97,7 @@ const updateUser = (req, res) => {
       .getUser(req.decoded.id)
       .then((usr) => {
         if (usr.count != 0) {
-          if (req.body.password) {
+          if (req.body.password && req.body.password != '') {
             req.body.password = bcrypt.hashSync(req.body.password, 5);
           }
           user

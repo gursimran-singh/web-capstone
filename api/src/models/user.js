@@ -46,7 +46,11 @@ function getAllUsers() {
   return User.scan().exec();
 }
 
-function getUser(email) {
+function getUser(id) {
+  return User.scan().filter("id").eq(id).exec();
+}
+
+function getUserByEmail(email) {
   return User.scan().filter("email").eq(email).exec();
 }
 
@@ -54,4 +58,4 @@ function updateUser(id, body) {
   return User.update({ id: id }, body);
 }
 
-module.exports = { getUser, createUser, updateUser, getAllUsers };
+module.exports = { getUser, getUserByEmail, createUser, updateUser, getAllUsers };
