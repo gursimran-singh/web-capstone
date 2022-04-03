@@ -63,7 +63,7 @@ let getOrdersByUserid = (req, res) => {
       TableName: "order",
       FilterExpression: "user_id=:ui",
       ExpressionAttributeValues: {
-        ":ui": req.body.userid,
+        ":ui": req.params.userid,
       },
     };
     docClient.scan(params, (err, orders) => {
