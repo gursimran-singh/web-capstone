@@ -103,7 +103,7 @@ const updateUser = (req, res) => {
           user
             .updateUser(usr[0].id, req.body)
             .then((usr) => {
-              res.status(0).json({ user: usr });
+              res.status(200).json({ user: usr });
             })
             .catch((err) => {
               res.status(400).json({ error: err });
