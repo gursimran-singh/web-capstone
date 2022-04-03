@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import "./product.css";
 import baseURL from "../../requestMethods.js";
 import { Navigate } from "react-router-dom";
-
+import logo from  "../../assets/images/default-image.jpg";
 import UploadImage from '../../Components/uploadImage/uploadImage';
 
 class Form extends Component {
@@ -15,6 +15,10 @@ class Form extends Component {
       data: [],
       redirect: null,
     };
+
+    let fields = this.state.fields;
+    fields["image"] = logo;
+    this.setState({ fields });
   }
 
 
@@ -82,7 +86,6 @@ class Form extends Component {
   }
 
   handleChange(field, e) {
-    console.log(e);
     let fields = this.state.fields;
     fields[field] = e.target.value;
     this.setState({ fields });

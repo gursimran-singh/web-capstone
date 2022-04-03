@@ -9,6 +9,6 @@ router.route("/create").post(userCtrl.createUser);
 router
   .route("/profile")
   .get(checkToken, userCtrl.getLoggedInUser)
-  .post(checkToken, userCtrl.updateUser);
+  .put(checkToken, userCtrl.updateUser);
 
 module.exports = router;

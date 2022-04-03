@@ -31,7 +31,10 @@ var userSchema = new dynamoose.Schema({
   },
 });
 
-const User = dynamoose.model("user", userSchema);
+const User = dynamoose.model("user", userSchema, {
+  create: false,
+  waitForActive: false
+});
 
 function createUser(data) {
   const newUser = new User(data);
@@ -51,20 +54,4 @@ function updateUser(id, body) {
   return User.update({ id: id }, body);
 }
 
-function deleteUser(id) {
-  const params = {
-    TableName: "user",
-    Key: {
-      id: { S: id },
-    },
-  };
-  DynamoDB.deleteItem(params, function (err) {
-    if (err) {
-      console.error("Unable to delete", err);
-    } else {
-      console.log(`Deleted`);
-    }
-  });
-}
-
-module.exports = { getUser, createUser, deleteUser, updateUser, getAllUsers };
+module.exports = { getUser, createUser, updateUser, getAllUsers };

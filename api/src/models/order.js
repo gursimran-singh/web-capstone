@@ -1,7 +1,5 @@
 const dynamoose = require("dynamoose");
-var AWS = require("aws-sdk");
 const Ulid = require("ulid");
-const DynamoDB = new AWS.DynamoDB();
 
 var orderSchema = new dynamoose.Schema({
   id: {
@@ -47,7 +45,10 @@ var orderSchema = new dynamoose.Schema({
   },
 });
 
-const Order = dynamoose.model("order", orderSchema);
+const Order = dynamoose.model("order", orderSchema, {
+  create: false,
+  waitForActive: false
+});
 
 let date = new Date(Date.now());
 let formatDate =

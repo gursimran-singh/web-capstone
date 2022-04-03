@@ -2,7 +2,13 @@ import React from "react";
 import "./topbar.css";
 import { Settings } from "@material-ui/icons";
 
+
 export default function Topbar() {
+
+  const logout = () => {
+    localStorage.clear();
+    window.location.href = "/login";
+  }
   return (
     <div className="topbar">
       <div className="topbarWrapper">
@@ -11,9 +17,8 @@ export default function Topbar() {
         </div>
         <div className="topRight">
           <div className="topbarIconContainer">
-            <Settings />
+            <Settings onClick={logout} title="Logout"/>
           </div>
-          {/* <img src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="topAvatar" /> */}
         </div>
       </div>
     </div>
