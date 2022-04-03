@@ -23,7 +23,7 @@ const doLogin = (req, res) => {
           // compare the hash password to authenticate
           if (bcrypt.compareSync(req.body.password, usr[0].password)) {
             //generate jwt token
-            const token = signToken(usr[0].email);
+            const token = signToken(usr[0].id);
             const _usr = {
               id: usr[0].id,
               name: usr[0].name,
