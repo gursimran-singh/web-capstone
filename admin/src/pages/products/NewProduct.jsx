@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "../../assets/css/style.css";
-import baseURL from "../../authRequest.js";
+import baseURL from "../../slices/authRequest.js";
 import { Navigate } from "react-router-dom";
 import logo from "../../assets/images/default-image.jpg";
 import UploadImage from '../../Components/uploadImage/uploadImage';

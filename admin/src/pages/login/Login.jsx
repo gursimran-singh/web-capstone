@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from 'prop-types';
-import baseURL from "../../authRequest.js";
+import baseURL from "../../slices/authRequest.js";
 import "./login.css";
 
 

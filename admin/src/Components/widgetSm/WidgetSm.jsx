@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 // import "../../assets/css/style.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState, useEffect } from "react";
-import baseURL from "../../authRequest.js";
+import baseURL from "../../slices/requestMethods.js";
 
 export default function WidgetSm() {
   const [data, setData] = useState();
@@ -43,26 +43,15 @@ export default function WidgetSm() {
   ];
 
   useEffect(() => {
-    baseURL.get("/food")
-      .then(
-        (result) => {
-          setData(result.data);
-          console.log(data);
-        },
-      ).catch(function (error) {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log('Error', error.message);
-        }
+    const fetchData = async () => {
 
-      });
+      const result = baseURL.get("/user")
+      .then(response => {
+        setData(response.data.users);
+        console.log(data);
+    });
+    };
+    fetchData();
   }, []);
 
   return (
@@ -73,8 +62,9 @@ export default function WidgetSm() {
         rows={data}
         disableSelectionOnClick
         columns={columns}
-        pageSize={10}
+        pageSize={4}
         hideFooterPagination
+        hideColumnHeader 
       />
     </div>
   );
