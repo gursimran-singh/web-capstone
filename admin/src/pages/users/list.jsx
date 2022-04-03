@@ -1,12 +1,10 @@
 import "../../assets/css/style.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState, useEffect } from "react";
-import baseURL from "../../requestMethods.js";
+import baseURL from "../../slices/requestMethods.js";
 
 export default function ProductList() {
   const [data, setData] = useState();
-
- 
 
   const columns = [
     {
@@ -15,6 +13,7 @@ export default function ProductList() {
       width: 200,
       renderCell: (params) => {
         return (
+
           <div className="productListItem">
             {params.row.name}
           </div>
@@ -34,37 +33,39 @@ export default function ProductList() {
       },
     },
     {
+      field: "type",
+      headerName: "Type",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <div className="productListItem">
+            {params.row.type}
+          </div>
+        );
+      },
+    },
+    {
       field: "status",
       headerName: "Status",
       width: 160,
     },
-    
+
   ];
 
-  useEffect(() => {
-    baseURL.get("/user")
-      .then(
-        (result) => {
-          console.log(data);
-          setData(result.data);
-          
-        },
-      ).catch(function (error) {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log('Error', error.message);
-        }
 
-      });
+  useEffect(() => {
+    const fetchData = async () => {
+
+      const result = baseURL.get("/user")
+      .then(response => {
+        setData(response.data.users);
+        console.log(data);
+    });
+    };
+    fetchData();
   }, []);
 
+  
   return (
 
     <div className="productList">
