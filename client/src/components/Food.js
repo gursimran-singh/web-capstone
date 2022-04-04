@@ -65,7 +65,7 @@ function FoodItem() {
             </div>
             <div className="container pt-5 pb-5">
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-6 mb-5">
                         <img src={item.image} alt={item.image} />
                     </div>
                     <div className="col-md-6">
