@@ -1,7 +1,7 @@
 #contact-banner {
   color:white;
   position: relative;
-  background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url("../../public/images/contact-banner1.png");
+  background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url("../../public/images/contactus-bg.jpg");
   height: 450px;
   background-size: 100% 100%;
   background-repeat: no-repeat;

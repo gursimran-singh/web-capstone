@@ -51,7 +51,7 @@ function FoodItem() {
      };
 
      if(addedToCart){
-       return   <Navigate to='/menu' />;
+       return   <Navigate to='/cart' />;
      }
 
     return (
