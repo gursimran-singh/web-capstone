@@ -16,6 +16,8 @@ export default function WidgetLg() {
           setData(response.data.Items);
         });
     };
+
+    
     fetchData();
 
   }, []);
