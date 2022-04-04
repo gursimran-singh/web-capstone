@@ -13,8 +13,7 @@ export default function ProductList() {
     console.log(id);
     baseURL.put("/category/delete/" + id)
       .then(response => {
-
-        // success message 
+        alert("category has been removed successfully");
 
       })
       .catch(error => console.log(error.response));
