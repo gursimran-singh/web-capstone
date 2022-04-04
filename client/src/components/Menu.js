@@ -83,7 +83,7 @@ function ProductList(){
                 <button className="btn btn-red" onClick={searchFood}  type="button">Search </button>
             </form>
             <div>
-            <div className="card mt-4" style={{boxShadow: "0px 0px 8px 0px #00000038", padding:"10px"}}>
+            <div className="card mt-4 mb-5" style={{boxShadow: "0px 0px 8px 0px #00000038", padding:"10px"}}>
                  <div className="card-header">Browse Categories</div>
                 <div className="body">
                   {
@@ -111,9 +111,9 @@ function ProductList(){
                                     <div className="col-md-3" key = {item.id}>
                                       <Link to={"/food/" + item.id}>
                                     <div className="card">
-                                        <img src={'images/' + item.image} className="card-img-top" alt="..."/>
+                                        <img src={item.image} className="card-img-top" alt="..."/>
                                         <div className="card-body text-center">
-                                            <h5 className="card-title">{item.name} </h5>
+                                            <h5 className="card-title" style={{color:"black"}}>{item.name} </h5>
                                             <p className=" main">{"$" + item.price }</p>    
                                         </div>
                                     </div>

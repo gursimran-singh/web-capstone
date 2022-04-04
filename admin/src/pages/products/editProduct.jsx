@@ -54,6 +54,11 @@ const Product = props => {
                 .then(response => {
                     console.log(response.data);
                     setMessage("The Product updated successfully!");
+                    const interval = setInterval(() => {
+                        setGoBack("goback");
+                    }, 1000);
+                    return () => clearInterval(interval);
+
                 })
                 .catch(e => {
                     console.log(e);
@@ -73,7 +78,7 @@ const Product = props => {
         if (!fields["category_id"]) {
             formIsValid = false;
             errors["category_id"] = "Please select category";
-          }
+        }
         if (!fields["image"]) {
             formIsValid = false;
             errors["price"] = "Cannot be empty";
@@ -137,7 +142,7 @@ const Product = props => {
                 <div className="addProductItem">
                     <label>Category</label>
                     <select name="category_id" onChange={handleInputChange} value={currentProduct.category_id}>
-                    <option>Select Category</option>
+                        <option>Select Category</option>
                         {objCategory.map(obj => {
                             return (
                                 <option

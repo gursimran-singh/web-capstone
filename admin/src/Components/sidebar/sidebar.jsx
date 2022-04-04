@@ -34,7 +34,7 @@ export default function Sidebar() {
             </Link>
             <Link to="/categories" className="link">
               <li className="sidebarListItem">
-                <Storefront className="sidebarIcon" />
+                <BarChart className="sidebarIcon" />
                 Categories
               </li>
             </Link>
@@ -50,11 +50,6 @@ export default function Sidebar() {
               Orders
             </li>
             </Link>
-            
-            {/* <li className="sidebarListItem">
-              <BarChart className="sidebarIcon" />
-              Reports
-            </li> */}
           </ul>
         </div>
       </div>

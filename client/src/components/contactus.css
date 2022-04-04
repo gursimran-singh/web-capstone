@@ -45,7 +45,7 @@ to { width: 100% }
 .contactus ul{
   list-style: none;
 }
-.contactus h1 {
+.contactus  h1 {
   font-size: 2.5rem;
   font-weight: bold;
 }
@@ -214,6 +214,19 @@ margin-top: 0.3125rem;
   .contactus .map{
     height: 60vw;
   }
+
+  #contact-banner {
+    margin-top: 0;
+    height: 240px;
+    background-size: cover;
+}
+.banner-text {
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    padding: 30px 2% 0 2% !important;
+}
+
 }
 .al-login-wrap{
   width: 100%;
@@ -509,3 +522,4 @@ margin-top: 0.3125rem;
   color: red;
   text-align: justify;
 }
+

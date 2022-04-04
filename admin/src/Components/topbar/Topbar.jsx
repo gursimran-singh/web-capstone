@@ -1,13 +1,13 @@
 import React from "react";
 import "./topbar.css";
-import { Settings } from "@material-ui/icons";
+import { ArrowForward } from "@material-ui/icons";
 
 
 export default function Topbar() {
 
   const logout = () => {
     localStorage.clear();
-    window.location.href = "/login";
+    window.location.href = "/";
   }
   return (
     <div className="topbar">
@@ -17,7 +17,7 @@ export default function Topbar() {
         </div>
         <div className="topRight">
           <div className="topbarIconContainer">
-            <Settings onClick={logout} title="Logout"/>
+            <ArrowForward onClick={logout} title="Logout"/>
           </div>
         </div>
       </div>

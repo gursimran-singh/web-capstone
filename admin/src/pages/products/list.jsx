@@ -14,8 +14,7 @@ export default function ProductList() {
     baseURL.put("/food/delete/" + id)
       .then(response => {
 
-        // success message 
-
+        alert("product has been removed successfully");
       })
       .catch(error => console.log(error.response));
 

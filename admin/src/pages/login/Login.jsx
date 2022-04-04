@@ -29,7 +29,11 @@ export default function Login({ setToken }) {
             console.log(response);
             setToken(response);
         }
-
+        window.location.reload();
+        // const interval = setInterval(() => {
+        //     //setGoBack("goback");
+        // }, 2000);
+        // return () => clearInterval(interval);
     }
 
     return (

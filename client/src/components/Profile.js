@@ -15,7 +15,7 @@ function ProfileData() {
     const [message, setMessage] = useState(false);
     const [userDetails, setDetails] = useState(initialProdState);
     const [errors, seterrorMsg] = useState(initialProdState);
-
+    const [isPasswordMod, setisPasswordMod] = useState(false);
     const config = {
         headers: { 'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem("user")).token}` }
     };
@@ -28,13 +28,30 @@ function ProfileData() {
                 config
             );
             setDetails(result.data[0]);
+
         };
         fetchData();
+
+    }, []);
+
+    const [userOrders, setOrder] = useState([]);
+    useEffect(() => {
+        const fetchData2 = async () => {
+
+            const result2 = await axios.get(
+                'https://6fdhemeqha.execute-api.ca-central-1.amazonaws.com/dev/api/order/user', config
+            );
+            setOrder(result2.data.Items)
+        };
+        fetchData2();
     }, []);
 
     const handleUpdateUser1 = event => {
         const { name, value } = event.target;
         setDetails({ ...userDetails, [name]: value });
+        if (name == "password") {
+            setisPasswordMod(true);
+        }
     }
 
     const updateProduct = () => {
@@ -83,15 +100,17 @@ function ProfileData() {
             errors["name"] = "Cannot be empty";
         }
 
-        if (fields["password"]) {
-            if (!fields["cfm_password"]) {
-                formIsValid = false;
-                errors["cfm_password"] = "Cannot be empty";
-            } else {
-
-                if (fields["cfm_password"] !== fields["password"]) {
+        if (isPasswordMod) {
+            if (fields["password"].length > 0) {
+                if (!fields["cfm_password"]) {
                     formIsValid = false;
-                    errors["cfm_password"] = "Confirm password and password should be same.";
+                    errors["cfm_password"] = "Cannot be empty";
+                } else {
+
+                    if (fields["cfm_password"] !== fields["password"]) {
+                        formIsValid = false;
+                        errors["cfm_password"] = "Confirm password and password should be same.";
+                    }
                 }
             }
         }
@@ -173,30 +192,31 @@ function ProfileData() {
                             <table style={{ minHeight: "350px" }} className="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">First</th>
-                                        <th scope="col">Last</th>
-                                        <th scope="col">Handle</th>
+                                        <th scope="col">Order No</th>
+                                        <th scope="col">Dishes</th>
+                                        <th scope="col">Total Amount</th>
+                                        <th scope="col">Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colSpan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
+                                    {
+                                        userOrders.map((orderItems) => {
+                                            let dish_name = JSON.parse(orderItems.dish_list);
+                                            return (
+                                                <tr key={orderItems.id}>
+                                                    <th scope="row">{orderItems.id}</th>
+                                                    <td>{dish_name.map((dish, i) => {
+                                                        return (
+                                                            <li key={i++}>{dish.item_name} - {dish.quantity}</li>
+                                                        )
+                                                    })}</td>
+                                                    <td>$ {orderItems.total_price}</td>
+                                                    <td>{orderItems.order_date}</td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+
                                 </tbody>
                             </table>
                         </div>
