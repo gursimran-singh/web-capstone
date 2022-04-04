@@ -7,22 +7,6 @@ import axios from "axios";
 const SIGNUP_URL = "https://6fdhemeqha.execute-api.ca-central-1.amazonaws.com/dev/api/user/create";
 const LOGIN_URL = "https://6fdhemeqha.execute-api.ca-central-1.amazonaws.com/dev/api/user/login";
 
-const loginAuth = (email, password) => {
-    return axios.post(LOGIN_URL, {
-            email,
-            password,
-        })
-        .then((response) => {
-            if (response.data.hasOwnProperty("token")) {
-                sessionStorage.setItem("user", JSON.stringify(response.data));
-            }
-            // console.log(JSON.parse(sessionStorage.getItem("user")));
-            // console.log(response);
-            return response;
-            
-        });
-};
-
 const logoutAuth = () => {
     sessionStorage.removeItem("user");
     
@@ -60,8 +44,14 @@ export const login = createAsyncThunk(
     "login",
     async ({ email, password }, thunkAPI) => {
         try {
-            const response = await loginAuth(email, password);
-            if(response.data.hasOwnProperty("token")){
+            const response = await axios.post(LOGIN_URL, {
+                email,
+                password,
+            });
+        //    console.log(response);
+            // if(response.data.hasOwnProperty("token")){
+                if(response.status === 200){
+                sessionStorage.setItem("user", JSON.stringify(response.data));
                 thunkAPI.dispatch(setMessage("Login successfully."));
                           
             }else{
@@ -69,10 +59,14 @@ export const login = createAsyncThunk(
             }
             return response.data;
         } catch (error) {
-            const message = error.message ||
+            if(error.response.status === 404){
+                // console.log(error.response.data.error);
+                thunkAPI.dispatch(setMessage(error.response.data.error || "Login Failed."));
+            }
+            else{const message = error.message ||
                 error.toString();
             thunkAPI.dispatch(setMessage(message));
-            return thunkAPI.rejectWithValue();
+            return thunkAPI.rejectWithValue();}
         }
     }
 );

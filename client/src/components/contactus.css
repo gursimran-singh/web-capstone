@@ -320,11 +320,10 @@ margin-top: 0.3125rem;
   max-width: 450px;
   padding: 0.625rem;
   margin: 0 auto;
-
   
 }
 
-.cart h4{
+.cart>h3{
  font-weight: bold;
  font-size: 1.5rem;
  text-align: center;
@@ -494,6 +493,9 @@ margin-top: 0.3125rem;
   margin-top: 1rem;
   display: flex;
   justify-content: space-between;
+}
+.payment .date-wrap>div{
+  flex: 1;
 }
 
 .payment .date-wrap .exp-month{
