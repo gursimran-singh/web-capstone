@@ -71,7 +71,7 @@ export default function Cart() {
             return (
               <li key={item.item_id}>
                 <div className="left-part">
-                  <img src={"images/" + item.item_image} alt=""/>
+                  <img src={item.item_image} alt=""/>
                 </div>
                 <div className="right-part">
                   <p>{item.item_name}</p>
