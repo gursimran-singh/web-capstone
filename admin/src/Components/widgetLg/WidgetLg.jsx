@@ -1,8 +1,6 @@
 import "./widgetLg.css";
-import { Visibility } from "@material-ui/icons";
 import { useState, useEffect } from "react";
 import baseURL from "../../slices/requestMethods.js";
-import { Link } from "react-router-dom";
 
 export default function WidgetLg() {
   const initialProdState = {
