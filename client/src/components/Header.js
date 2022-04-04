@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/js/dist/carousel';
 import 'bootstrap/js/dist/collapse';
-import 'bootstrap/js/src/dropdown';
+import 'bootstrap/js/dist/dropdown';
 import './main.css';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -58,7 +58,7 @@ function Header() {
                 <div>
                     <nav className="navbar navbar-expand-lg navbar-light">
                         <div className="container-fluid">
-                            <Link to="/homepage" className="nav-item nav-link"><img src="images/logo.png" /></Link>
+                            <Link to="/homepage" className="nav-item nav-link mobile-logo"><img alt="LOGO" className="mobile-logo" src="images/logo.png" /></Link>
                             <button type="button" className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                                 <span className="navbar-toggler-icon"></span>
                             </button>
