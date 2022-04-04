@@ -15,7 +15,7 @@ function ProfileData() {
     const [message, setMessage] = useState(false);
     const [userDetails, setDetails] = useState(initialProdState);
     const [errors, seterrorMsg] = useState(initialProdState);
-
+    const [isPasswordMod, setisPasswordMod] = useState(false);
     const config = {
         headers: { 'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem("user")).token}` }
     };
@@ -28,25 +28,30 @@ function ProfileData() {
                 config
             );
             setDetails(result.data[0]);
+
         };
         fetchData();
+
     }, []);
 
-    const [userOrders, setOrder] = useState([]); 
+    const [userOrders, setOrder] = useState([]);
     useEffect(() => {
-        const fetchData2 = async() => {
-            
-          const result2 = await axios.get(
-            'https://6fdhemeqha.execute-api.ca-central-1.amazonaws.com/dev/api/order/user',config
+        const fetchData2 = async () => {
+
+            const result2 = await axios.get(
+                'https://6fdhemeqha.execute-api.ca-central-1.amazonaws.com/dev/api/order/user', config
             );
-          setOrder(result2.data.Items)
-         };
-         fetchData2();
-      }, []);
+            setOrder(result2.data.Items)
+        };
+        fetchData2();
+    }, []);
 
     const handleUpdateUser1 = event => {
         const { name, value } = event.target;
         setDetails({ ...userDetails, [name]: value });
+        if (name == "password") {
+            setisPasswordMod(true);
+        }
     }
 
     const updateProduct = () => {
@@ -94,17 +99,18 @@ function ProfileData() {
             formIsValid = false;
             errors["name"] = "Cannot be empty";
         }
-        
-        console.log(fields["password"]);
-        if (fields["password"].length > 0) {
-            if (!fields["cfm_password"]) {
-                formIsValid = false;
-                errors["cfm_password"] = "Cannot be empty";
-            } else {
 
-                if (fields["cfm_password"] !== fields["password"]) {
+        if (isPasswordMod) {
+            if (fields["password"].length > 0) {
+                if (!fields["cfm_password"]) {
                     formIsValid = false;
-                    errors["cfm_password"] = "Confirm password and password should be same.";
+                    errors["cfm_password"] = "Cannot be empty";
+                } else {
+
+                    if (fields["cfm_password"] !== fields["password"]) {
+                        formIsValid = false;
+                        errors["cfm_password"] = "Confirm password and password should be same.";
+                    }
                 }
             }
         }
@@ -184,34 +190,34 @@ function ProfileData() {
                     <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         <div className="table-responsive">
                             <table style={{ minHeight: "350px" }} className="table table-hover">
-                            <thead>
-                        <tr>
-                        <th scope="col">Order No</th>
-                        <th scope="col">Dishes</th>
-                        <th scope="col">Total Amount</th>
-                        <th scope="col">Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { 
-                            userOrders.map((orderItems) => {
-                               let dish_name = JSON.parse(orderItems.dish_list);
-                                return (
-                                    <tr key = {orderItems.id}>
-                                    <th scope="row">{orderItems.id}</th>
-                                    <td>{dish_name.map((dish,i) => {
-                                        return(
-                                            <li key = {i++}>{dish.item_name} - {dish.quantity}</li>
-                                        )
-                                    })}</td>
-                                    <td>$ {orderItems.total_price}</td>
-                                    <td>{orderItems.order_date}</td>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Order No</th>
+                                        <th scope="col">Dishes</th>
+                                        <th scope="col">Total Amount</th>
+                                        <th scope="col">Date</th>
                                     </tr>
-                                )
-                            })
-                        }
-                        
-                    </tbody>
+                                </thead>
+                                <tbody>
+                                    {
+                                        userOrders.map((orderItems) => {
+                                            let dish_name = JSON.parse(orderItems.dish_list);
+                                            return (
+                                                <tr key={orderItems.id}>
+                                                    <th scope="row">{orderItems.id}</th>
+                                                    <td>{dish_name.map((dish, i) => {
+                                                        return (
+                                                            <li key={i++}>{dish.item_name} - {dish.quantity}</li>
+                                                        )
+                                                    })}</td>
+                                                    <td>$ {orderItems.total_price}</td>
+                                                    <td>{orderItems.order_date}</td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+
+                                </tbody>
                             </table>
                         </div>
 

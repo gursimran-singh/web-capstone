@@ -8,13 +8,16 @@ export default function ProductList() {
 
 
   const columns = [
-    { field: "id", headerName: "Order Id", width: 90,
-    renderCell: (params) => {
-      return (
+    {
+      field: "id", headerName: "Order Id", width: 290,
+      renderCell: (params) => {
+        return (
 
-        <div className="productListItem">  {params.row.id}</div>
+          <div className="productListItem">  {params.row.id}</div>
 
-      ); }, },
+        );
+      },
+    },
     {
       field: "customer_name",
       headerName: "Customer",
@@ -33,17 +36,18 @@ export default function ProductList() {
       width: 160,
     },
     {
-      field: "items", headerName: "Quantity", width: 200,
+      field: "price", headerName: "Quantity", width: 200,
       renderCell: (params) => {
         return (
-          <div className="productListItem"> {params.row.dish_list.length}</div>
-
+          <div className="productListItem">
+            ${params.row.total_price}
+          </div>
         );
       },
     },
     {
-      field: "delivery_date",
-      headerName: "Delivery Date",
+      field: "order_date",
+      headerName: "Order Date",
       width: 160,
     },
     // {
@@ -70,10 +74,10 @@ export default function ProductList() {
     const fetchData = async () => {
 
       const result = baseURL.get("/order")
-      .then(response => {
-        setData(response.data.users);
-        console.log(data);
-    });
+        .then(response => {
+          setData(response.data.Items);
+          console.log(response);
+        });
     };
     fetchData();
   }, []);

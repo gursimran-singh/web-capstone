@@ -4,7 +4,8 @@ import 'bootstrap/js/dist/carousel';
 import './main.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { Alert, Button } from 'react-bootstrap';
 
 function Banner(){
     return (
@@ -126,25 +127,52 @@ function Banner(){
   }
 
   function Newsletter() {
+      const [show, setShow] = useState(false);
+      const [email, setEmail] = useState('');
+      const [variant, setVariant] = useState();
+      const [heading, setHeading] = useState();
+      const [msg, setMsg] = useState();
+
+      const handleSubmit = (e) => {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+          setEmail('');
+          setVariant('success');
+          setHeading('Form submit successfully!');
+          setMsg('Thank you for subscribing our newsletter. Have a nice day');
+        } else {
+          setVariant('danger');
+          setHeading('Oh snap! You got an error!');
+          setMsg('Please enter valid email address');
+        }
+        setShow(true);
+      }
       return(
-        <div className="container-fluid" style={{backgroundColor: "rgb(180 128 13)"}}>
-        <div className="container">
-            <div className="row align-items-center">
-                <div className="col-md-4 py-4 py-md-5 aside-stretch d-flex align-items-center">
-                    <div className="w-100">
-                        <span className="subheading">Subscribe to our</span>
-                        <h3 className="heading-section">Newsletter</h3>
-                    </div>
-                </div>
-                <div className="col-md-8 py-4 py-md-5 d-flex align-items-center pl-md-5">
-                <form action="#" className="subscribe-form w-100">
-                <div className="form-group d-flex">
-                    <input type="text" className="form-control rounded-left" placeholder="Enter email address"/>
-                    <button type="submit" className="form-control submit"><span>Submit</span></button>
-                </div>
-                </form>
-            </div>
-            </div>
+        <div>
+          {show ? (
+            <Alert variant={variant} onClose={() => setShow(false)} dismissible>
+            <Alert.Heading>{heading}</Alert.Heading>
+            <p>{msg}</p>
+          </Alert>  
+          ) : ''}
+          <div className="container-fluid" style={{backgroundColor: "rgb(180 128 13)"}}>
+          <div className="container">
+              <div className="row align-items-center">
+                  <div className="col-md-4 py-4 py-md-5 aside-stretch d-flex align-items-center">
+                      <div className="w-100">
+                          <span className="subheading">Subscribe to our</span>
+                          <h3 className="heading-section">Newsletter</h3>
+                      </div>
+                  </div>
+                  <div className="col-md-8 py-4 py-md-5 d-flex align-items-center pl-md-5">
+                  <form action="#" className="subscribe-form w-100">
+                  <div className="form-group d-flex">
+                      <input type="text" className="form-control rounded-left" placeholder="Enter email address" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                      <Button className="form-control submit" onClick={handleSubmit}>Subscribe</Button>
+                  </div>
+                  </form>
+              </div>
+              </div>
+          </div>
         </div>
     </div>
       )
