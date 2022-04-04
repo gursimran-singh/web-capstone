@@ -46,6 +46,10 @@ const Product = props => {
                 .then(response => {
                     console.log(response.data);
                     setMessage("The Category was updated successfully!");
+                    const interval = setInterval(() => {
+                        setGoBack("goback");
+                    }, 1000);
+                    return () => clearInterval(interval);
                 })
                 .catch(e => {
                     console.log(e);
