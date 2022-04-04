@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import baseURL from "../../authRequest.js";
+import baseURL from "../../slices/authRequest.js";
 
 export default function ProductList() {
   const [data, setData] = useState();
@@ -13,8 +13,7 @@ export default function ProductList() {
     console.log(id);
     baseURL.put("/category/delete/" + id)
       .then(response => {
-
-        // success message 
+        alert("category has been removed successfully");
 
       })
       .catch(error => console.log(error.response));

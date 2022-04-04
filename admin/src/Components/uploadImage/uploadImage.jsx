@@ -1,5 +1,5 @@
 import React from 'react';
-import baseURL from "../../requestMethods.js";
+import baseURL from "../../slices/authRequest.js";
 
 const UploadImage = (props) => {
     const onSelectFile = async (event) => {

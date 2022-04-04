@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component } from "react";
-import baseURL from "../../authRequest.js";
+import baseURL from "../../slices/authRequest.js";
 import { Link, useLocation } from "react-router-dom";
 import "../../assets/css/style.css";
 import UploadImage from '../../Components/uploadImage/uploadImage';
@@ -12,7 +12,7 @@ const Product = props => {
 
     const [currentProduct, setcurrentProduct] = useState(initialProdState);
     const [message, setMessage] = useState("");
-    const [errorMsg, seterrorMsg] = useState("");
+    const [errors, seterrorMsg] = useState(initialProdState);
     const [goBack, setGoBack] = useState("");
     const location = useLocation();
     const catId = location.pathname.split("/")[2];
@@ -46,6 +46,10 @@ const Product = props => {
                 .then(response => {
                     console.log(response.data);
                     setMessage("The Category was updated successfully!");
+                    const interval = setInterval(() => {
+                        setGoBack("goback");
+                    }, 1000);
+                    return () => clearInterval(interval);
                 })
                 .catch(e => {
                     console.log(e);
@@ -58,18 +62,18 @@ const Product = props => {
     const handleValidation = () => {
         let fields = currentProduct;
         let formIsValid = true;
-
+        let errors = {};
         //Name
         if (!fields["name"]) {
             formIsValid = false;
-            seterrorMsg({ ["name"]: "Cannot be empty" });
+            errors["name"] = "Cannot be empty";
         }
         if (!fields["image"]) {
             formIsValid = false;
-            seterrorMsg({ ["image"]: "please select image." });
+            errors["image"] = "Cannot be empty";
         }
 
-
+        seterrorMsg(errors);
         return formIsValid;
     };
     if (goBack == "goback") {
@@ -91,7 +95,7 @@ const Product = props => {
                 <div className="addProductItem">
                     <label>Change Image</label>
                     <UploadImage section="item" updateField={updateField.bind(this)} />
-                    <span style={{ color: "red" }}>{errorMsg.image}</span>
+                    <span style={{ color: "red" }}>{errors["image"]}</span>
                     <img alt="Item pic" src={currentProduct.image} />
 
                 </div>
@@ -99,8 +103,7 @@ const Product = props => {
                     <label>Name</label>
                     <input type="text" placeholder="Name" name="name" onChange={handleInputChange}
                         value={currentProduct.name} />
-                    <span style={{ color: "red" }}>{errorMsg.name}</span>
-
+                    <span style={{ color: "red" }}>{errors["name"]}</span>
                 </div>
             </form>
             <button
@@ -116,7 +119,7 @@ const Product = props => {
                 onClick={clickGoBack}>
                 Back
             </button>
-           
+
         </div>
     );
 };

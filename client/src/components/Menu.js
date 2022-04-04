@@ -111,7 +111,7 @@ function ProductList(){
                                     <div className="col-md-3" key = {item.id}>
                                       <Link to={"/food/" + item.id}>
                                     <div className="card">
-                                        <img src={'images/' + item.image} className="card-img-top" alt="..."/>
+                                        <img src={item.image} className="card-img-top" alt="..."/>
                                         <div className="card-body text-center">
                                             <h5 className="card-title">{item.name} </h5>
                                             <p className=" main">{"$" + item.price }</p>    

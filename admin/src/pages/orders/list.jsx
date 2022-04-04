@@ -1,20 +1,23 @@
 import "../../assets/css/style.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState, useEffect } from "react";
-import baseURL from "../../authRequest.js";
+import baseURL from "../../slices/requestMethods.js";
 
 export default function ProductList() {
   const [data, setData] = useState();
 
 
   const columns = [
-    { field: "id", headerName: "Order Id", width: 90,
-    renderCell: (params) => {
-      return (
+    {
+      field: "id", headerName: "Order Id", width: 290,
+      renderCell: (params) => {
+        return (
 
-        <div className="productListItem">  {params.row.id}</div>
+          <div className="productListItem">  {params.row.id}</div>
 
-      ); }, },
+        );
+      },
+    },
     {
       field: "customer_name",
       headerName: "Customer",
@@ -33,17 +36,18 @@ export default function ProductList() {
       width: 160,
     },
     {
-      field: "items", headerName: "Quantity", width: 200,
+      field: "price", headerName: "Quantity", width: 200,
       renderCell: (params) => {
         return (
-          <div className="productListItem"> {params.row.dish_list.length}</div>
-
+          <div className="productListItem">
+            ${params.row.total_price}
+          </div>
         );
       },
     },
     {
-      field: "delivery_date",
-      headerName: "Delivery Date",
+      field: "order_date",
+      headerName: "Order Date",
       width: 160,
     },
     // {
@@ -67,27 +71,17 @@ export default function ProductList() {
   ];
 
   useEffect(() => {
-    baseURL.get("/order")
-      .then(
-        (result) => {
-          setData(result.data);
-          console.log(data);
-        },
-      ).catch(function (error) {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log('Error', error.message);
-        }
+    const fetchData = async () => {
 
-      });
+      const result = baseURL.get("/order")
+        .then(response => {
+          setData(response.data.Items);
+          console.log(response);
+        });
+    };
+    fetchData();
   }, []);
+
 
   return (
 

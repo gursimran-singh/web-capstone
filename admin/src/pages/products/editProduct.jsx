@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component } from "react";
-import baseURL from "../../authRequest.js";
+import baseURL from "../../slices/authRequest.js";
 import { Link, useLocation } from "react-router-dom";
 import "../../assets/css/style.css";
 import UploadImage from '../../Components/uploadImage/uploadImage';
@@ -13,7 +13,7 @@ const Product = props => {
     const [currentProduct, setcurrentProduct] = useState(initialProdState);
     const [message, setMessage] = useState("");
     const [goBack, setGoBack] = useState("");
-    const [errorMsg, seterrorMsg] = useState("");
+    const [errors, seterrorMsg] = useState(initialProdState);
     const [objCategory, setCategory] = useState([]);
 
     const location = useLocation();
@@ -54,6 +54,11 @@ const Product = props => {
                 .then(response => {
                     console.log(response.data);
                     setMessage("The Product updated successfully!");
+                    const interval = setInterval(() => {
+                        setGoBack("goback");
+                    }, 1000);
+                    return () => clearInterval(interval);
+
                 })
                 .catch(e => {
                     console.log(e);
@@ -64,42 +69,43 @@ const Product = props => {
     const handleValidation = () => {
         let fields = currentProduct;
         let formIsValid = true;
-
+        let errors = {};
         //Name
         if (!fields["name"]) {
             formIsValid = false;
-            seterrorMsg({ ["name"]: "Cannot be empty" });
+            errors["name"] = "Cannot be empty";
         }
         if (!fields["category_id"]) {
             formIsValid = false;
-            seterrorMsg({ ["category_id"]: "Please select category" });
+            errors["category_id"] = "Please select category";
         }
         if (!fields["image"]) {
             formIsValid = false;
-            seterrorMsg({ ["image"]: "Please select image" });
+            errors["price"] = "Cannot be empty";
         }
         if (!fields["price"]) {
             formIsValid = false;
-            seterrorMsg({ ["price"]: "Cannot be empty" });
+            errors["price"] = "Cannot be empty";
         } else {
 
             if (typeof fields["price"] !== "undefined") {
                 let _price = fields["price"].toString();
                 if (!_price.match(/^[0-9]+$/)) {
                     formIsValid = false;
-                    seterrorMsg({ ["price"]: "Price can be numeric only" });
+                    errors["price"] = "Price can be numeric only.";
                 }
             }
         }
         if (!fields["description"]) {
             formIsValid = false;
-            seterrorMsg({ ["description"]: "Cannot be empty" });
+            errors["description"] = "Cannot be empty";
         }
         if (!fields["rating"]) {
             formIsValid = false;
-            seterrorMsg({ ["rating"]: "Cannot be empty" });
+            errors["rating"] = "Cannot be empty";
         }
 
+        seterrorMsg(errors);
         return formIsValid;
     };
 
@@ -130,12 +136,13 @@ const Product = props => {
                     <label>Name</label>
                     <input type="text" placeholder="Name" name="name" onChange={handleInputChange}
                         value={currentProduct.name} />
-                    <span style={{ color: "red" }}>{errorMsg.name}</span>
+                    <span style={{ color: "red" }}>{errors["name"]}</span>
 
                 </div>
                 <div className="addProductItem">
                     <label>Category</label>
                     <select name="category_id" onChange={handleInputChange} value={currentProduct.category_id}>
+                        <option>Select Category</option>
                         {objCategory.map(obj => {
                             return (
                                 <option
@@ -154,25 +161,25 @@ const Product = props => {
                     <label>Price</label>
                     <input type="text" placeholder="price" onChange={handleInputChange}
                         value={currentProduct.price} name="price" />
-                    <span style={{ color: "red" }}>{errorMsg.price}</span>
+                    <span style={{ color: "red" }}>{errors["price"]}</span>
                 </div>
                 <div className="addProductItem">
                     <label>Rating</label>
                     <input type="text" placeholder="Rating" onChange={handleInputChange}
                         value={currentProduct.rating} name="rating" />
-                    <span style={{ color: "red" }}>{errorMsg.rating}</span>
+                    <span style={{ color: "red" }}>{errors["rating"]}</span>
                 </div>
                 <div className="addProductItem">
                     <label>Description</label>
                     <input type="textarea" row="2" onChange={handleInputChange}
                         value={currentProduct.description} name="description" />
-                    <span style={{ color: "red" }}>{errorMsg.description}</span>
+                    <span style={{ color: "red" }}>{errors.description}</span>
 
                 </div>
                 <div className="addProductItem">
                     <label>Change Image</label>
                     <UploadImage section="item" updateField={updateField.bind(this)} />
-                    <span style={{ color: "red" }}>{errorMsg.image}</span>
+                    <span style={{ color: "red" }}>{errors.image}</span>
                     <img alt="Item pic" src={currentProduct.image} />
 
                 </div>
