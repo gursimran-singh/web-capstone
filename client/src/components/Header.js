@@ -58,7 +58,7 @@ function Header() {
                 <div>
                     <nav className="navbar navbar-expand-lg navbar-light">
                         <div className="container-fluid">
-                            <Link to="/homepage" className="nav-item nav-link mobile-logo"><img alt="LOGO" className="mobile-logo" src="images/logo.png" /></Link>
+                            <Link to="/homepage" className="nav-item nav-link mobile-logo"><img alt="LOGO" className="mobile-logo" src="../images/logo.png" /></Link>
                             <button type="button" className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                                 <span className="navbar-toggler-icon"></span>
                             </button>
@@ -83,9 +83,9 @@ function Header() {
                                             style={dialogStyle}
                                             contentLabel="Confirm logout"
                                         >
-                                            <h4 ref={(_subTitle) => (subTitle = _subTitle)} >Are you sure you want to logout?</h4>
-                                            <button onClick={cancelLogout}>Cancel</button>
-                                            <button onClick={confirmLogout} style={{marginLeft:"1rem"}}> Logout</button>
+                                            <h4 style={{color: "black"}} className="pb-4"  >Are you sure you want to logout?</h4>
+                                            <button className="btn btn-danger" onClick={cancelLogout}>Cancel</button>
+                                            <button className="btn btn-primary" onClick={confirmLogout} style={{marginLeft:"1rem"}}> Logout</button>
 
                                         </Modal></li>
                                       

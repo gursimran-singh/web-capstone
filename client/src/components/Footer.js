@@ -11,7 +11,7 @@ function Footer(){
                 <div className="row pt-4">
                     <div className="col-md-12 text-center">
                         
-                                <Link to="/homepage" className="logo"><img src="images/logo-ver3.png" style={{width:"auto"}} className="logo" alt="logo"/></Link>
+                                <Link to="/homepage" className="logo"><img src="../images/logo-ver3.png" style={{width:"auto"}} className="logo" alt="logo"/></Link>
                                 <p className="copyright">
                               Copyright ©2022 All rights reserved | <i className="ion-ios-heart" aria-hidden="true"></i> by <a href="#" target="_blank">Cuisine De Palace</a>
                              </p>

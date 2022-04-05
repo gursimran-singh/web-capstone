@@ -20,15 +20,28 @@ function Banner() {
 
 function ProductList(){
     const [list, setList] = useState([]);
-
-    
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
+    let menuCat = params.get('c');
+    if(menuCat == null){
+      menuCat = "";
+    }
+    // }else {
+    //  let a = document.getElementById(menuCat);
+    //  console.log(a);
+    //  if(a != null) {
+    //    a.checked = true;
+    //  }
+    // }
+   
+    let foodUrl = "https://6fdhemeqha.execute-api.ca-central-1.amazonaws.com/dev/api/food/search?s=&cat="+menuCat;
   useEffect(() => {
     const fetchData = async() => {
       const result = await axios(
-        'https://6fdhemeqha.execute-api.ca-central-1.amazonaws.com/dev/api/food/',
+        foodUrl
       );
     
-    setList(result.data)
+    setList(result.data.Items)
     // setList(result.data)
     };
     fetchData();

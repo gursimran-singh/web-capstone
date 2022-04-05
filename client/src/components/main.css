@@ -298,5 +298,12 @@ ftco-section {
             .mobile-logo{
                 width:220px;
             }
+
+            .cartButton {
+                display: block !important;
+            }
+            .mmt-4{
+                margin-top:4%;
+            }
         }
 

@@ -101,12 +101,14 @@ function Banner(){
           cat.map((itemCat) => {
             return(
               <div className="card hover-img" key={itemCat.id}>
+                <Link to ={"/menu?c="+itemCat.id}>
                 <img src={itemCat.image} className="card-img-top img-ver2" alt={itemCat.name}/>
                 <div className="hover-text">
                     <div className="text" style={{minWidth:"120px"}}>
                         <p>{itemCat.name}</p>
                     </div>
                 </div>
+                </Link>
               </div>
             )}
             )

@@ -64,12 +64,12 @@ export default function Cart() {
   }
   return (
     <div className="cart-wrap">
-      <div className="cart">
+      <div className="cart" style={{backgroundColor: "white", padding:"20px"}}>
         <h3>Shopping Cart</h3>
-        <ul>
+        <ul >
           {dishList.map((item, index) => {
             return (
-              <li key={item.item_id}>
+              <li style={{borderBottom: "1px solid black"}} key={item.item_id}>
                 <div className="left-part">
                   <img src={item.item_image} alt=""/>
                 </div>
@@ -81,6 +81,7 @@ export default function Cart() {
                       name="reduce"
                       // id="reduce"
                       value="-"
+                      className="btn btn-secondary"
                       onClick={
                         () => dispatch(dishRemove(item.item_id))
                         // changeItem(item.item_id, "minus")
@@ -89,6 +90,7 @@ export default function Cart() {
                     <input
                       name="quantity"
                       value={item.quantity}
+                      style={{margin: "5px"}}
                       onChange={
                         (e) => {
                           let quantity = parseInt(e.target.value);
@@ -107,6 +109,7 @@ export default function Cart() {
                       name="add"
                       id="add"
                       value="+"
+                      className="btn btn-secondary"
                       onClick={
                         () => dispatch(dishAdd(item.item_id))
                         //changeItem(item.item_id, "add")
@@ -115,7 +118,7 @@ export default function Cart() {
                   </p>
                   <p className="item-amount remove-btn">
                     {"$" + (item.quantity * item.item_price).toFixed(2)}
-                    <button
+                    <button className="btn btn-danger"
                       onClick={
                         () => dispatch(removeDishFromCart(item.item_id))
                         // removeItem(item.item_id)
@@ -129,7 +132,7 @@ export default function Cart() {
             );
           })}
         </ul>
-        <div className="subtotal">
+        <div className="subtotal text-center">
           <h4>
             Subtotal:&nbsp;
             <span className="item-amount">
@@ -137,8 +140,8 @@ export default function Cart() {
             </span>
           </h4>
         </div>
-        <div className="chk-out">
-          <button onClick={checkout}>Check Out</button>
+        <div className="text-center pt-3">
+          <button className="btn btn-red" onClick={checkout}>Check Out</button>
         </div>
       </div>
     </div>

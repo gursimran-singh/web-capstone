@@ -137,7 +137,7 @@ function ProfileData() {
                 </ul>
                 <div className="tab-content" id="myTabContent">
                     <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <div className="row pt-5">
+                        <div className="row pt-5" style={{minHeight: "350px"}}>
                             {
 
                                 message && (

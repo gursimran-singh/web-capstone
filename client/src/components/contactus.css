@@ -313,7 +313,7 @@ margin-top: 0.3125rem;
   width: 100%;
   min-height: 80vh;
   padding: 3.75rem 0;
-  background-color: #F7F1FF;
+  background-color: #67676712;
 }
 
 .cart{
@@ -368,7 +368,6 @@ margin-top: 0.3125rem;
   align-items: center;
 }
 .cart .subtotal h4{
-  text-align: end;
   margin-bottom: 0;
   font-size: 1.25rem;
 }
