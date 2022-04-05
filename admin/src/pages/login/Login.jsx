@@ -20,16 +20,17 @@ export default function Login({ setToken }) {
             email,
             password
         });
-
-        if (response?.error != null) {
-            console.log(response.error);
-            setMessage(response.error);
+debugger
+        if (response.isAxiosError) {
+            console.log(response);
+            setMessage(response.message);
 
         } else {
             console.log(response);
             setToken(response);
+            window.location.reload();
         }
-        window.location.reload();
+       
         // const interval = setInterval(() => {
         //     //setGoBack("goback");
         // }, 2000);
@@ -52,7 +53,7 @@ export default function Login({ setToken }) {
 
                 <form onSubmit={handleSubmit}>
                     <div className="input-container">
-                        <label>Username </label>
+                        <label>Email </label>
                         <input type="text" name="uname" required onChange={e => setEmail(e.target.value)} />
                     </div>
                     <div className="input-container">
