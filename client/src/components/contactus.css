@@ -1,7 +1,7 @@
 #contact-banner {
   color:white;
   position: relative;
-  background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url("../../public/images/contact-banner1.png");
+  background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url("../../public/images/contactus-bg.jpg");
   height: 450px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -45,7 +45,7 @@ to { width: 100% }
 .contactus ul{
   list-style: none;
 }
-.contactus h1 {
+.contactus  h1 {
   font-size: 2.5rem;
   font-weight: bold;
 }
@@ -214,6 +214,19 @@ margin-top: 0.3125rem;
   .contactus .map{
     height: 60vw;
   }
+
+  #contact-banner {
+    margin-top: 0;
+    height: 240px;
+    background-size: cover;
+}
+.banner-text {
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    padding: 30px 2% 0 2% !important;
+}
+
 }
 .al-login-wrap{
   width: 100%;
@@ -307,11 +320,10 @@ margin-top: 0.3125rem;
   max-width: 450px;
   padding: 0.625rem;
   margin: 0 auto;
-
   
 }
 
-.cart h4{
+.cart>h3{
  font-weight: bold;
  font-size: 1.5rem;
  text-align: center;
@@ -482,6 +494,9 @@ margin-top: 0.3125rem;
   display: flex;
   justify-content: space-between;
 }
+.payment .date-wrap>div{
+  flex: 1;
+}
 
 .payment .date-wrap .exp-month{
   margin: 0 0.625rem;
@@ -509,3 +524,4 @@ margin-top: 0.3125rem;
   color: red;
   text-align: justify;
 }
+

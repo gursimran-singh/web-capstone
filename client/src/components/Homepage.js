@@ -9,33 +9,15 @@ import { Alert, Button } from 'react-bootstrap';
 
 function Banner(){
     return (
-        
-        <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
-          <div className="carousel-inner">
-            <div className="carousel-item active">
-              <img src="images/home-banner.png" className="d-block w-100" alt="..."/>
-              <div className="banner-text">
+
+      <div id="home-banner">
+                <div className="banner-text">
                     <h1>Cuisine De Palace</h1>
                     <p>Get home cooked meal at your door step. Just one click away!!</p>     
                     <Link to="/menu" className="btn btn-red">Order Now</Link>
                 </div>
-            </div>
-
-
-            <div className="carousel-item">
-              <img src="images/home-banner.png" className="d-block w-100" alt="..."/>
-            </div>
-            
-          </div>
-          <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span className="visually-hidden">Previous</span>
-          </button>
-          <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-            <span className="visually-hidden">Next</span>
-          </button>
-    </div>
+        </div>
+        
     )
   }
 
@@ -69,7 +51,7 @@ function Banner(){
                                     <div className="card">
                                         <img src={item.image} className="card-img-top" alt="..."/>
                                         <div className="card-body text-center">
-                                            <h5 className="card-title">{item.name} </h5>
+                                            <h5 className="card-title" style={{color:"black"}}>{item.name} </h5>
                                             <p className=" main">{"$" + item.price }</p>    
                                         </div>
                                     </div>
@@ -121,7 +103,7 @@ function Banner(){
               <div className="card hover-img" key={itemCat.id}>
                 <img src={itemCat.image} className="card-img-top img-ver2" alt={itemCat.name}/>
                 <div className="hover-text">
-                    <div className="text">
+                    <div className="text" style={{minWidth:"120px"}}>
                         <p>{itemCat.name}</p>
                     </div>
                 </div>
