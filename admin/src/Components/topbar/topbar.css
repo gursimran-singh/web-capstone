@@ -55,3 +55,16 @@
       border-radius: 50%;
       cursor: pointer;
   }
+  button {
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    background: #888181;
+    border: 1px solid #888181;
+    color: #fff;
+    padding: 5px 12px;
+  }
+  
+  button:hover {
+    background: #c53938;
+  }

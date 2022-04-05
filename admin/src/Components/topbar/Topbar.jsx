@@ -17,7 +17,8 @@ export default function Topbar() {
         </div>
         <div className="topRight">
           <div className="topbarIconContainer">
-            <ArrowForward onClick={logout} title="Logout"/>
+            <button type="button" onClick={logout} title="Logout">Logout</button>
+            {/* <ArrowForward onClick={logout} title="Logout"/> */}
           </div>
         </div>
       </div>
