@@ -24,8 +24,8 @@ export default function WidgetSm() {
 
   }, []);
   
-  if (objData.length > 7) {
-    setData(objData.slice(0,7));
+  if (objData.length > 8) {
+    setData(objData.slice(0,8));
   }
 
   return (

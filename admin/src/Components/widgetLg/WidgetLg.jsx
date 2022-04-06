@@ -17,13 +17,13 @@ export default function WidgetLg() {
         });
     };
 
-    
+
     fetchData();
 
   }, []);
 
   if (objData.length > 8) {
-    setData(objData.slice(0, 8));
+    setData(objData.filter(x => x.total_price != null).sort((a, b) => new Date(a.order_date) - new Date(b.order_date)).slice(0, 8));
   }
 
   const Button = ({ type }) => {
