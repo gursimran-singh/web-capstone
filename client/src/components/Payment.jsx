@@ -15,7 +15,7 @@ const ORDERPUT_URL =
 export default function Payment() {
   const location = useLocation();
   const [paymentStatus, setPaymentStatus] = useState(false);
-  let { order_id, total_price } = location.state;
+  let { order_id, total_price } = location.state? location.state: {};
   const [amount, setAmount] = useState(total_price);
 
   // console.log(order_id, total_price);
