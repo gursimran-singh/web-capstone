@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import {
@@ -6,6 +6,7 @@ import {
   dishAdd,
   dishRemove,
   removeDishFromCart,
+  initDishList,
 } from "./slices/cartSlice";
 import "./contactus.css";
 import { Link, Navigate } from "react-router-dom";
@@ -16,6 +17,7 @@ export default function Cart() {
   const dispatch = useDispatch();
   const [isChkout, setIsChkout] = useState(false);
   const [loginStatus, setLoginStatus] = useState(true);
+  
 
   function subTotal(cartList) {
     let sum = 0;
@@ -41,6 +43,9 @@ export default function Cart() {
     }
   };
 
+  useEffect(()=>{
+    dispatch(initDishList());
+  }, []);
   if(!loginStatus){
     alert("Please login before check out");
     return <Navigate to='/login' />;
